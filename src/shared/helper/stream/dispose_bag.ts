@@ -14,10 +14,10 @@ export class DisposeBag {
     this._disposable.forEach(disposable => {
       if (disposable instanceof Subscription) {
         disposable.unsubscribe();
-        if (this._enableLogging) Log.d(`Canceled ${disposable}`, {name: 'Subscription'});
+        if (this._enableLogging) Log.d(`Canceled ${disposable}`, {name: 'DisposeBag Subscription'});
       } else if (disposable instanceof Subject) {
         disposable.complete();
-        if (this._enableLogging) Log.d(`Closed ${disposable}`, {name: 'Subject'});
+        if (this._enableLogging) Log.d(`Closed ${disposable}`, {name: 'DisposeBag Subject'});
       } else if (disposable instanceof Disposable) {
         disposable.dispose();
       }

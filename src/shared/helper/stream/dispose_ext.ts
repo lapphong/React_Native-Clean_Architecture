@@ -1,5 +1,6 @@
 import {Subscription, Subject} from 'rxjs';
-import {DisposeBag, Disposable} from 'shared/shared';
+import {Disposable} from './disposable';
+import {DisposeBag} from 'shared/shared';
 
 declare module 'rxjs' {
   interface Subscription {

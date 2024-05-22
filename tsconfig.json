@@ -3,7 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "shared/*": ["./src/shared/*"]
+      "shared/*": ["./src/shared/*"],
+      "initializer/*": ["./src/initializer/*"]
     },
     "strict": true,
     "noEmit": true,

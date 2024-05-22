@@ -1,7 +1,15 @@
 import React, {useEffect} from 'react';
 import type {PropsWithChildren} from 'react';
 import BootSplash from 'react-native-bootsplash';
-import {SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, useColorScheme, View} from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+} from 'react-native';
 
 import {
   Colors,
@@ -10,8 +18,18 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import {EnvConstants, Log, UrlConstants, ViewUtils} from 'shared/shared';
-import {duration} from 'moment';
+import {
+  AppInfoHelper,
+  ConnectivityHelper,
+  DeviceHelper,
+  EnvConstants,
+  Log,
+  UrlConstants,
+  ViewUtils,
+} from 'shared/shared';
+import 'reflect-metadata';
+import {container} from 'tsyringe';
+import {DI_Type} from 'initializer/initializer';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -51,8 +69,16 @@ function App(): React.JSX.Element {
   };
 
   useEffect(() => {
-    Log.d('Test Log.d in shared');
-    Log.e('Test Log.d in shared');
+    const init = async () => {
+      // …do multiple sync or async tasks
+    };
+
+    init().finally(async () => {
+      await BootSplash.hide({fade: true});
+    });
+
+    Log.d('Test Log.d in shared', {name: 'Test'});
+    Log.e('Test Log.d in shared', {name: 'Test'});
     let json = {
       code: 'test',
       name: 'test',
@@ -64,24 +90,34 @@ function App(): React.JSX.Element {
       phone: '0987654321',
       expirationTime: 604800,
     };
-    Log.d(Log.prettyJson(json));
-    Log.d(UrlConstants.appApiBaseUrl);
+    Log.d(Log.prettyJson(json), {name: 'Test'});
+    Log.d(UrlConstants.appApiBaseUrl, {name: 'URL'});
     EnvConstants.init();
+    ViewUtils.showAppSnackBar('Test snackbar', 5000);
 
-    // ViewUtils.showAppSnackBar('Test snackbar',5000);
+    async function checkNetworkAvailability() {
+      const connectivityHelper = container.resolve<ConnectivityHelper>(DI_Type.ConnectivityHelper);
+      const isAvailable = await connectivityHelper.isNetworkAvailable();
+      Log.d(`Check: ${isAvailable}`, {name: 'INTERNET'});
+
+      const appInfoHelper = container.resolve<AppInfoHelper>(DI_Type.AppInfoHelper);
+      await appInfoHelper.init();
+
+      const deviceHelper = container.resolve<DeviceHelper>(DI_Type.DeviceHelper);
+      const deviceId = await deviceHelper.deviceId();
+      const deviceModelName = await deviceHelper.deviceModelName();
+      Log.d(`${deviceId}`, {name: 'DEVICE HELPER'});
+      Log.d(`${deviceModelName}`, {name: 'DEVICE HELPER'});
+    }
+
+    // Gọi hàm async để kiểm tra kết nối mạng
+    checkNetworkAvailability();
+
     // Log.d((2).plus(1));
     // Log.d(2?.minus(1));
     // Log.d(2?.div(2));
     // Log.d(2?.times(1));
     // Log.d(2?.truncateDiv(1));
-
-    const init = async () => {
-      // …do multiple sync or async tasks
-    };
-
-    init().finally(async () => {
-      await BootSplash.hide({fade: true});
-    });
   }, []);
 
   return (
@@ -97,8 +133,8 @@ function App(): React.JSX.Element {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this screen and then come back to see your
-            edits.
+            Edit <Text style={styles.highlight}>App.tsx</Text> to change this screen and then come
+            back to see your edits.
           </Section>
           <Section title="See Your Changes">
             <ReloadInstructions />

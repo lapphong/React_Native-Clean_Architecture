@@ -1,6 +1,6 @@
 import {singleton} from 'tsyringe';
 import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
-import {Observable, single} from 'rxjs';
+import {Observable} from 'rxjs';
 
 @singleton()
 export class ConnectivityHelper {
