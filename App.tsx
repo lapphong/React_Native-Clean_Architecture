@@ -30,6 +30,8 @@ import {
 import 'reflect-metadata';
 import {container} from 'tsyringe';
 import {DI_Type} from 'initializer/initializer';
+import {BottomTab} from 'domain/domain';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -113,6 +115,10 @@ function App(): React.JSX.Element {
     // Gọi hàm async để kiểm tra kết nối mạng
     checkNetworkAvailability();
 
+    Log.d(`${BottomTab.getLabel(BottomTab.home)}`, {name: 'BOTTOM LABEL'});
+    Log.d(`${BottomTab.getLabel(BottomTab.notifications)}`, {name: 'BOTTOM LABEL'});
+    Log.d(`${BottomTab.getLabel(BottomTab.setting)}`, {name: 'BOTTOM LABEL'});
+
     // Log.d((2).plus(1));
     // Log.d(2?.minus(1));
     // Log.d(2?.div(2));
@@ -128,6 +134,9 @@ function App(): React.JSX.Element {
       />
       <ScrollView contentInsetAdjustmentBehavior="automatic" style={backgroundStyle}>
         <Header />
+        <Icon name={BottomTab.home} />
+        <Icon name={BottomTab.notifications} />
+        <Icon name={BottomTab.setting} />
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,

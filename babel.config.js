@@ -7,6 +7,7 @@ module.exports = {
         alias: {
           shared: './src/shared',
           initializer: './src/initializer',
+          domain: './src/domain',
         },
       },
     ],

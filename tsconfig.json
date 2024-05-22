@@ -4,7 +4,8 @@
     "baseUrl": ".",
     "paths": {
       "shared/*": ["./src/shared/*"],
-      "initializer/*": ["./src/initializer/*"]
+      "initializer/*": ["./src/initializer/*"],
+      "domain/*": ["./src/domain/*"]
     },
     "strict": true,
     "noEmit": true,
