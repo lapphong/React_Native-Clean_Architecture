@@ -5,7 +5,7 @@ import {
   NetworkExceptionsKind,
 } from 'shared/shared';
 
-export class NetworkException extends AppException {
+export class NetworkingException extends AppException {
   constructor(public kind: NetworkExceptions) {
     super(AppExceptionType.remote);
   }
@@ -50,6 +50,6 @@ export class NetworkException extends AppException {
   }
 
   toString(): string {
-    return `NetworkException: {kind: ${this.kind.type}}`;
+    return `NetworkingException: {kind: ${this.kind.type}}`;
   }
 }

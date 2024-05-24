@@ -15,7 +15,7 @@ import {
   NetworkExceptions,
   NetworkExceptionsKind,
 } from './exceptions/network/network_exception_kind.ts';
-import {NetworkException} from './exceptions/network/network_exception.ts';
+import {NetworkingException} from './exceptions/network/networking_exception.ts';
 import {ParseException, ParseExceptionKind} from './exceptions/parse/parse_exception.ts';
 import {
   ValidationExceptionKind,
@@ -60,7 +60,7 @@ export {
   ExceptionMapper,
   NetworkExceptionsKind,
   NetworkExceptions,
-  NetworkException,
+  NetworkingException,
   ParseExceptionKind,
   ParseException,
   ValidationExceptionKind,
