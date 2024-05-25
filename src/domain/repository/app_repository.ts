@@ -3,9 +3,9 @@ import {Observable} from 'rxjs';
 
 export abstract class AppRepository {
   abstract get isLoggedIn(): boolean;
-  abstract get isFirstLaunchApp(): boolean;
-  abstract get isFirstLogin(): boolean;
-  abstract get isDarkMode(): boolean;
+  abstract get isFirstLaunchApp(): boolean | Promise<boolean>;
+  abstract get isFirstLogin(): boolean | Promise<boolean>;
+  abstract get isDarkMode(): boolean | Promise<boolean>;
   // abstract get languageCode(): LanguageCode;
 
   abstract get onConnectivityChanged(): Observable<boolean>;
@@ -14,17 +14,17 @@ export abstract class AppRepository {
 
   abstract clearCurrentUserData(): Promise<void>;
 
-  abstract saveIsFirstLogin(isFirstLogin: boolean): Promise<boolean>;
+  abstract saveIsFirstLogin(isFirstLogin: boolean): Promise<void>;
 
-  abstract saveIsFirstLaunchApp(isFirstLaunchApp: boolean): Promise<boolean>;
+  abstract saveIsFirstLaunchApp(isFirstLaunchApp: boolean): Promise<void>;
 
-  abstract saveIsDarkMode(isDarkMode: boolean): Promise<boolean>;
+  abstract saveIsDarkMode(isDarkMode: boolean): Promise<void>;
 
   // abstract saveLanguageCode(languageCode: LanguageCode): Promise<boolean>;
 
   abstract saveAccessToken(accessToken: string): Promise<void>;
 
-  abstract saveUserPreference(user: User): Promise<boolean>;
+  abstract saveUserPreference(user: User): Promise<void>;
 
   abstract getMe(): Promise<User>;
 

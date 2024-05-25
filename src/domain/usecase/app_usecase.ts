@@ -14,7 +14,7 @@ export class AppUsecase {
     @inject('AppNavigator') private _navigator: AppNavigator,
   ) {}
 
-  get getInitialHomeDataUseCase(): boolean {
+  get getInitialHomeDataUseCase(): boolean | Promise<boolean> {
     return !this._appRepository.isLoggedIn && this._appRepository.isFirstLaunchApp;
   }
 
@@ -22,7 +22,7 @@ export class AppUsecase {
     return this._appRepository.isLoggedIn;
   }
 
-  get isDarkModeUseCase(): boolean {
+  get isDarkModeUseCase(): boolean | Promise<boolean> {
     return this._appRepository.isDarkMode;
   }
 
@@ -30,16 +30,16 @@ export class AppUsecase {
     return this._appRepository.isLoggedIn ? InitialAppRoute.main : InitialAppRoute.login;
   }
 
-  async saveIsDarkModeUseCase(isDarkMode: boolean): Promise<boolean> {
-    return await this._appRepository.saveIsDarkMode(isDarkMode);
+  async saveIsDarkModeUseCase(isDarkMode: boolean): Promise<void> {
+    await this._appRepository.saveIsDarkMode(isDarkMode);
   }
 
-  async saveIsFirstLaunchAppUseCase(isFirstLaunchApp: boolean): Promise<boolean> {
-    return await this._appRepository.saveIsFirstLaunchApp(isFirstLaunchApp);
+  async saveIsFirstLaunchAppUseCase(isFirstLaunchApp: boolean): Promise<void> {
+    await this._appRepository.saveIsFirstLaunchApp(isFirstLaunchApp);
   }
 
-  async saveIsFirstLoginUseCase(isFirstLogin: boolean): Promise<boolean> {
-    return await this._appRepository.saveIsFirstLogin(isFirstLogin);
+  async saveIsFirstLoginUseCase(isFirstLogin: boolean): Promise<void> {
+    await this._appRepository.saveIsFirstLogin(isFirstLogin);
   }
 
   async clearCurrentUserDataUseCase(): Promise<void> {
