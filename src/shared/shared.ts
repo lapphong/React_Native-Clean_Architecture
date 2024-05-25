@@ -11,11 +11,7 @@ import UrlConstants from './constants/url_constants.ts';
 import {AppExceptionWrapper} from './exceptions/base/app_exception_wrapper.ts';
 import {AppException, AppExceptionType} from './exceptions/base/app_exception.ts';
 import {ExceptionMapper} from './exceptions/base/exception_mapper.ts';
-import {
-  NetworkExceptions,
-  NetworkExceptionsKind,
-} from './exceptions/network/network_exception_kind.ts';
-import {NetworkingException} from './exceptions/network/networking_exception.ts';
+import {NetworkException, NetworkExceptionsKind} from './exceptions/network/network_exception.ts';
 import {ParseException, ParseExceptionKind} from './exceptions/parse/parse_exception.ts';
 import {
   ValidationExceptionKind,
@@ -59,8 +55,7 @@ export {
   AppExceptionType,
   ExceptionMapper,
   NetworkExceptionsKind,
-  NetworkExceptions,
-  NetworkingException,
+  NetworkException,
   ParseExceptionKind,
   ParseException,
   ValidationExceptionKind,

@@ -1,15 +1,14 @@
 import {singleton} from 'tsyringe';
-import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
-import {Observable} from 'rxjs';
+import NetInfo from '@react-native-community/netinfo';
+import {Observable, map} from 'rxjs';
 
 @singleton()
 export class ConnectivityHelper {
-  async isNetworkAvailable(): Promise<boolean> {
-    const state: NetInfoState = await NetInfo.fetch();
-    return state.isConnected ?? false;
+  get isNetworkAvailable(): Promise<boolean> {
+    return NetInfo.fetch().then(state => state.isConnected ?? false);
   }
 
-  onConnectivityChanged(): Observable<boolean> {
+  get onConnectivityChanged(): Observable<boolean> {
     return new Observable<boolean>(observer => {
       const unsubscribe = NetInfo.addEventListener(state => {
         observer.next(state.isConnected ?? false);
@@ -17,6 +16,6 @@ export class ConnectivityHelper {
       return () => {
         unsubscribe();
       };
-    });
+    }).pipe(map(value => value));
   }
 }

@@ -1,25 +1,20 @@
-import {
-  AppException,
-  AppExceptionType,
-  NetworkExceptions,
-  NetworkExceptionsKind,
-} from 'shared/shared';
+import {AppException, AppExceptionType} from 'shared/shared';
 
-export class NetworkingException extends AppException {
-  constructor(public kind: NetworkExceptions) {
+export class NetworkException extends AppException {
+  constructor(public kind: NetworkExceptionsKind, public reason?: string) {
     super(AppExceptionType.remote);
   }
 
   get message(): string {
-    switch (this.kind.type) {
+    switch (this.kind) {
       case NetworkExceptionsKind.requestCancelled:
         return `Yêu cầu đã bị hủy`;
       case NetworkExceptionsKind.unauthorizedRequest:
-        return `Yêu cầu không được phép ${this.kind.reason}`;
+        return `Yêu cầu không được phép ${this.reason}`;
       case NetworkExceptionsKind.badRequest:
-        return `Yêu cầu không hợp lệ ${this.kind.reason}`;
+        return `Yêu cầu không hợp lệ ${this.reason}`;
       case NetworkExceptionsKind.notFound:
-        return `Không tìm thấy ${this.kind.reason}`;
+        return `Không tìm thấy ${this.reason}`;
       case NetworkExceptionsKind.methodNotAllowed:
         return `Phương thức không được phép`;
       case NetworkExceptionsKind.requestTimeout:
@@ -30,26 +25,40 @@ export class NetworkingException extends AppException {
         return `Xung đột`;
       case NetworkExceptionsKind.internalServerError:
         return `Lỗi máy chủ nội bộ`;
-      case NetworkExceptionsKind.notImplemented:
-        return `Chưa được triển khai`;
       case NetworkExceptionsKind.serviceUnavailable:
         return `Dịch vụ không khả dụng`;
       case NetworkExceptionsKind.noInternetConnection:
         return `Không có kết nối internet`;
       case NetworkExceptionsKind.refreshTokenFailed:
         return `Token Expired`;
-      case NetworkExceptionsKind.formatExceptions:
-        return `Lỗi định dạng`;
       case NetworkExceptionsKind.unableToProcess:
         return `Không thể xử lý yêu cầu`;
       case NetworkExceptionsKind.defaultError:
-        return `Lỗi mặc định ${this.kind.reason}`;
+        return `Lỗi mặc định ${this.reason}`;
       case NetworkExceptionsKind.unexpectedError:
         return `Lỗi không mong đợi`;
     }
   }
 
   toString(): string {
-    return `NetworkingException: {kind: ${this.kind.type}}`;
+    return `NetworkingException: {kind: ${this.kind}, reason: ${this.reason ?? 'Null'}}`;
   }
+}
+
+export enum NetworkExceptionsKind {
+  requestCancelled,
+  unauthorizedRequest,
+  badRequest,
+  notFound,
+  methodNotAllowed,
+  requestTimeout,
+  sendTimeout,
+  conflict,
+  internalServerError,
+  serviceUnavailable,
+  noInternetConnection,
+  refreshTokenFailed,
+  unableToProcess,
+  defaultError,
+  unexpectedError,
 }

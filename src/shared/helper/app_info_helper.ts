@@ -4,28 +4,28 @@ import {singleton} from 'tsyringe';
 
 @singleton()
 export class AppInfoHelper {
-  async applicationId(): Promise<string> {
-    return (await DeviceInfo.getAndroidId()) ?? '';
+  get applicationId(): Promise<string> {
+    return DeviceInfo.getAndroidId().then(value => value ?? '');
   }
 
-  async appName(): Promise<string> {
-    return (await DeviceInfo.getDeviceName()) ?? '';
+  get appName(): Promise<string> {
+    return DeviceInfo.getDeviceName().then(value => value ?? '');
   }
 
-  versionCode(): string {
+  get versionCode(): string {
     return DeviceInfo.getVersion() ?? '';
   }
 
-  async versionName(): Promise<string> {
-    return (await DeviceInfo.getCodename()) ?? '';
+  get versionName(): Promise<string> {
+    return DeviceInfo.getCodename().then(value => value ?? '');
   }
 
   async init(): Promise<void> {
     try {
-      Log.d(await this.applicationId(), {name: 'APPLICATION_ID'});
-      Log.d(await this.appName(), {name: 'APP_NAME'});
-      Log.d(this.versionCode(), {name: 'VERSION_CODE'});
-      Log.d(await this.versionName(), {name: 'VERSION_NAME'});
+      Log.d(this.applicationId, {name: 'APPLICATION_ID'});
+      Log.d(this.appName, {name: 'APP_NAME'});
+      Log.d(this.versionCode, {name: 'VERSION_CODE'});
+      Log.d(this.versionName, {name: 'VERSION_NAME'});
     } catch (error) {
       console.error('Error initializing AppInfo:', error);
     }

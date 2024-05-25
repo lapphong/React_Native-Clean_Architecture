@@ -10,22 +10,24 @@ export enum DeviceType {
 
 @singleton()
 export class DeviceHelper {
-  async deviceId(): Promise<string> {
+  get deviceId(): Promise<string> {
     if (Platform.OS === 'ios') {
-      return await DeviceInfo.getUniqueId();
+      return DeviceInfo.getUniqueId();
     } else {
-      const androidID = await DeviceInfo.getAndroidId();
-      return androidID || '';
+      return DeviceInfo.getAndroidId().then(androidID => androidID ?? '');
     }
   }
 
-  async deviceModelName(): Promise<string> {
+  get deviceModelName(): Promise<string> {
     if (Platform.OS === 'ios') {
-      const iosInfo = await DeviceInfo.getDevice();
-      return iosInfo || '';
+      return DeviceInfo.getDevice().then(iosInfo => iosInfo ?? '');
     } else {
-      const androidInfo = DeviceInfo.getBrand() + ' ' + (await DeviceInfo.getDevice());
-      return androidInfo || '';
+      const deviceBrand: string = DeviceInfo.getBrand() + ' ';
+      const androidInfo = DeviceInfo.getDevice().then(
+        device => deviceBrand + device ?? deviceBrand,
+      );
+
+      return androidInfo;
     }
   }
 
