@@ -2,13 +2,13 @@ import {User} from 'domain/domain';
 import {Observable} from 'rxjs';
 
 export abstract class AppRepository {
-  abstract isLoggedIn: boolean;
-  abstract isFirstLaunchApp: boolean;
-  abstract isFirstLogin: boolean;
-  abstract isDarkMode: boolean;
-  // abstract languageCode: LanguageCode;
+  abstract get isLoggedIn(): boolean;
+  abstract get isFirstLaunchApp(): boolean;
+  abstract get isFirstLogin(): boolean;
+  abstract get isDarkMode(): boolean;
+  // abstract get languageCode(): LanguageCode;
 
-  abstract onConnectivityChanged: Observable<boolean>;
+  abstract get onConnectivityChanged(): Observable<boolean>;
 
   // abstract getUserPreference(): User;
 
