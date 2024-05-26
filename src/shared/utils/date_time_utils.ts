@@ -38,7 +38,10 @@ export class DateTimeUtils {
       return null;
     }
   }
-}
 
-const now = clock.systemClock.now();
-const today = moment(now).startOf('day');
+  static getCurrentTimeFormatted(): string {
+    const now = clock.systemClock.now();
+    const currentTime = moment(now).toDate();
+    return moment(currentTime).format('hh:mm:ss A');
+  }
+}

@@ -1,4 +1,4 @@
-import {LogConfig} from 'shared/shared';
+import {DateTimeUtils, LogConfig} from 'shared/shared';
 
 enum LogColor {
   bright = '\x1b[1m',
@@ -18,9 +18,9 @@ export class Log {
 
   static d(
     message: any,
-    {color = LogColor.cyan, name = '', time}: {color?: LogColor; name?: string; time?: Date} = {},
+    {color = LogColor.cyan, name = ''}: {color?: LogColor; name?: string} = {},
   ): void {
-    this._log(`💡 ${message}`, {color, name, time});
+    this._log(`💡 ${message}`, {color, name});
   }
 
   static e(
@@ -30,17 +30,14 @@ export class Log {
       name = '',
       errorObject,
       stackTrace,
-      time,
-    }: {color?: LogColor; name?: string; errorObject?: any; stackTrace?: string; time?: Date} = {},
+    }: {color?: LogColor; name?: string; errorObject?: any; stackTrace?: string} = {},
   ): void {
-    this._log(`💢 ${errorMessage}`, {color, name, errorObject, stackTrace, time});
+    this._log(`💢 ${errorMessage}`, {color, name, errorObject, stackTrace});
   }
 
   static prettyJson(json: {[key: string]: any}): string {
-    const indent = '  '.repeat(2);
-    const prettyJson = JSON.stringify(json, null, indent);
-
-    return prettyJson;
+    const prettyJson = JSON.stringify(json, null, 4);
+    return prettyJson.replace(/^{/, '{').replace(/}$/, '}').replace(/\n/g, '\n   ');
   }
 
   private static _log(
@@ -48,27 +45,26 @@ export class Log {
     {
       color = LogColor.cyan,
       name = '',
-      time,
       error,
       stackTrace,
       errorObject,
     }: {
       color?: LogColor;
       name?: string;
-      time?: Date;
       error?: any;
       stackTrace?: string;
       errorObject?: any;
     } = {},
   ): void {
     if (this._enableLog) {
-      const timeLog = time ? ` [Time:${time}]` : '';
+      const time = DateTimeUtils.getCurrentTimeFormatted();
+      console.log(
+        LogColor.bright + LogColor.yellow + `[${time}]` + color + `[${name}]\t| ` + message,
+      );
 
-      console.log(LogColor.bright + color + `[${name}] ` + message + timeLog);
+      if (error) console.error(LogColor.bright + LogColor.red + error);
 
-      if (error) console.error(LogColor.bright + LogColor.red + error + timeLog);
-
-      if (stackTrace) console.error(LogColor.bright + LogColor.red + stackTrace + timeLog);
+      if (stackTrace) console.error(LogColor.bright + LogColor.red + stackTrace);
     }
   }
 }

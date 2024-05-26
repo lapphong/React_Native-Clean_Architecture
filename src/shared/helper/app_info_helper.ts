@@ -5,11 +5,11 @@ import {singleton} from 'tsyringe';
 @singleton()
 export class AppInfoHelper {
   get applicationId(): Promise<string> {
-    return DeviceInfo.getAndroidId().then(value => value ?? '');
+    return DeviceInfo.getAndroidId() ?? '';
   }
 
   get appName(): Promise<string> {
-    return DeviceInfo.getDeviceName().then(value => value ?? '');
+    return DeviceInfo.getDeviceName() ?? '';
   }
 
   get versionCode(): string {
@@ -17,15 +17,15 @@ export class AppInfoHelper {
   }
 
   get versionName(): Promise<string> {
-    return DeviceInfo.getCodename().then(value => value ?? '');
+    return DeviceInfo.getCodename() ?? '';
   }
 
   async init(): Promise<void> {
     try {
-      Log.d(this.applicationId, {name: 'APPLICATION_ID'});
-      Log.d(this.appName, {name: 'APP_NAME'});
+      Log.d(await this.applicationId, {name: 'APPLICATION_ID'});
+      Log.d(await this.appName, {name: 'APP_NAME'});
       Log.d(this.versionCode, {name: 'VERSION_CODE'});
-      Log.d(this.versionName, {name: 'VERSION_NAME'});
+      Log.d(await this.versionName, {name: 'VERSION_NAME'});
     } catch (error) {
       console.error('Error initializing AppInfo:', error);
     }

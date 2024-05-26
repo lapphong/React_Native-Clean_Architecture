@@ -1,8 +1,8 @@
 import {Constants} from 'shared/shared';
 
 export enum InitialAppRoute {
-  login,
-  main,
+  login = 'login',
+  main = 'main',
 }
 
 export enum Gender {

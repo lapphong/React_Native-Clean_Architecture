@@ -14,20 +14,22 @@ export class AppUsecase {
     @inject('AppNavigator') private _navigator: AppNavigator,
   ) {}
 
-  get getInitialHomeDataUseCase(): boolean | Promise<boolean> {
+  get getInitialHomeDataUseCase(): boolean {
     return !this._appRepository.isLoggedIn && this._appRepository.isFirstLaunchApp;
   }
 
-  get isLoggedInUseCase(): boolean {
+  get isLoggedInUseCase(): Promise<boolean> {
     return this._appRepository.isLoggedIn;
   }
 
-  get isDarkModeUseCase(): boolean | Promise<boolean> {
+  get isDarkModeUseCase(): Promise<boolean> {
     return this._appRepository.isDarkMode;
   }
 
-  get loadInitialResourceUseCase(): InitialAppRoute {
-    return this._appRepository.isLoggedIn ? InitialAppRoute.main : InitialAppRoute.login;
+  get loadInitialResourceUseCase(): Promise<InitialAppRoute> {
+    return this._appRepository.isLoggedIn.then(value =>
+      value ? InitialAppRoute.main : InitialAppRoute.login,
+    );
   }
 
   async saveIsDarkModeUseCase(isDarkMode: boolean): Promise<void> {
@@ -47,7 +49,7 @@ export class AppUsecase {
   }
 
   async logoutUseCase(loginRoute: PageRouteInfo): Promise<void> {
-    if (this._appRepository.isLoggedIn) {
+    if (await this.isLoggedInUseCase) {
       await this._navigator.showDialog(
         AppPopupInfo.confirmDialog({
           message: 'Bạn có chắc muốn đăng xuất',

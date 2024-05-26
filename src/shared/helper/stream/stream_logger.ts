@@ -1,6 +1,5 @@
-import moment from 'moment';
 import {Observable, finalize, tap} from 'rxjs';
-import {DateTimeUtils, Log} from 'shared/shared';
+import {Log} from 'shared/shared';
 
 declare module 'rxjs' {
   interface Observable<T> {
@@ -36,32 +35,27 @@ Observable.prototype.log = function <T>(
     logOnCancel?: boolean;
   } = {},
 ): Observable<T> {
-  const currentTime = moment().format('DD/MM/YYYY HH:mm:ss');
-  const parsedDate =
-    DateTimeUtils.tryParse(currentTime, {format: 'DD/MM/YYYY HH:mm:ss'}) ??
-    DateTimeUtils.localToUtc(Date.now());
-
   return this.pipe(
     tap({
       next: event => {
         if (logOnData) {
-          Log.d(`🟢 onEvent: ${event}`, {time: parsedDate, name});
+          Log.d(`🟢 onEvent: ${event}`, {name});
         }
       },
       error: error => {
         if (logOnError) {
-          Log.d(`🔴 onError: ${error}`, {time: parsedDate, name});
+          Log.d(`🔴 onError: ${error}`, {name});
         }
       },
       complete: () => {
         if (logOnDone) {
-          Log.d('☑️️ onCompleted', {time: parsedDate, name});
+          Log.d('☑️️ onCompleted', {name});
         }
       },
     }),
     finalize(() => {
       if (logOnCancel) {
-        Log.d('🟡 onCanceled', {time: parsedDate, name});
+        Log.d('🟡 onCanceled', {name});
       }
     }),
   );
