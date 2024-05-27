@@ -27,11 +27,10 @@ import {
   UrlConstants,
   ViewUtils,
 } from 'shared/shared';
-import 'reflect-metadata';
-import {container} from 'tsyringe';
-import {DI_Type} from 'initializer/initializer';
-import {BottomTab} from 'domain/domain';
+import {container, DI_Type} from 'initializer/initializer';
+import {AppUsecase, AuthUsecase, BottomTab, NotiUsecase} from 'domain/domain';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {AppPreferences, AppRepositoryImpl} from 'data/data';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -79,45 +78,84 @@ function App(): React.JSX.Element {
       await BootSplash.hide({fade: true});
     });
 
-    Log.d('Test Log.d in shared', {name: 'Test'});
-    Log.e('Test Log.d in shared', {name: 'Test'});
-    let json = {
-      code: 'test',
-      name: 'test',
-      des: 'test',
-      token:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RlVG9rZW4iOiJEa252dEhGSm5namc1ZG0zSHAxdmVhTUh4TUVpa1dObCIsImNvZGVVc2VyIjoidGVzdCIsImNvZGVSb2xlIjoiYWRtaW4iLCJuYmYiOjE3MTYxODE0NzcsImV4cCI6MTcxNjc4NjI3NywiaWF0IjoxNzE2MTgxNDc3fQ.wgrBhzY3FnXHXhS_ZqDMYYMAUFHHAoZBsHr5TdupCh0',
-      refeshToken: '',
-      role: 'admin',
-      phone: '0987654321',
-      expirationTime: 604800,
-    };
-    Log.d(Log.prettyJson(json), {name: 'Test'});
-    Log.d(UrlConstants.appApiBaseUrl, {name: 'URL'});
-    EnvConstants.init();
-    ViewUtils.showAppSnackBar('Test snackbar', 5000);
+    // Log.d('Test Log.d in shared', {name: 'Test'});
+    // Log.e('Test Log.d in shared', {name: 'Test'});
+    // Log.d(UrlConstants.appApiBaseUrl, {name: 'URL'});
+    // EnvConstants.init();
+    // ViewUtils.showAppSnackBar('Test snackbar', 5000);
 
     async function checkNetworkAvailability() {
-      const connectivityHelper = container.resolve<ConnectivityHelper>(DI_Type.ConnectivityHelper);
-      const isAvailable = await connectivityHelper.isNetworkAvailable();
-      Log.d(`Check: ${isAvailable}`, {name: 'INTERNET'});
+      // const connectivityHelper = container.resolve<ConnectivityHelper>(DI_Type.ConnectivityHelper);
+      // const isAvailable = await connectivityHelper.isNetworkAvailable;
+      // Log.d(`Check: ${isAvailable}`, {name: 'INTERNET'});
 
-      const appInfoHelper = container.resolve<AppInfoHelper>(DI_Type.AppInfoHelper);
-      await appInfoHelper.init();
+      // const appInfoHelper = container.resolve<AppInfoHelper>(DI_Type.AppInfoHelper);
+      // await appInfoHelper.init();
 
-      const deviceHelper = container.resolve<DeviceHelper>(DI_Type.DeviceHelper);
-      const deviceId = await deviceHelper.deviceId();
-      const deviceModelName = await deviceHelper.deviceModelName();
-      Log.d(`${deviceId}`, {name: 'DEVICE HELPER'});
-      Log.d(`${deviceModelName}`, {name: 'DEVICE HELPER'});
+      // const deviceHelper = container.resolve<DeviceHelper>(DI_Type.DeviceHelper);
+      // const deviceId = await deviceHelper.deviceId;
+      // const deviceModelName = await deviceHelper.deviceModelName;
+      // const deviceType = deviceHelper.deviceType;
+      // const operatingSystem = deviceHelper.operatingSystem;
+      // Log.d(`${deviceId}`, {name: 'DEVICE HELPER'});
+      // Log.d(`${deviceModelName}`, {name: 'DEVICE HELPER'});
+      // Log.d(`${deviceType}`, {name: 'DEVICE HELPER'});
+      // Log.d(`${operatingSystem}`, {name: 'DEVICE HELPER'});
+
+      const appPreferences = container.resolve<AppPreferences>(DI_Type.AppPreferences);
+      // await appPreferences.clearCurrentUserData();
+      Log.d(`isFirstLogin ${await appPreferences.isFirstLogin}`, {
+        name: 'APP Preferences',
+      });
+
+      Log.d(`isDarkMode ${await appPreferences.isDarkMode}`, {
+        name: 'APP Preferences',
+      });
+
+      Log.d(`isFirstLaunchApp ${await appPreferences.isFirstLaunchApp}`, {
+        name: 'APP Preferences',
+      });
+
+      Log.d(`accessToken ${await appPreferences.accessToken}`, {
+        name: 'APP Preferences',
+      });
+
+      Log.d(`refreshToken ${await appPreferences.refreshToken}`, {
+        name: 'APP Preferences',
+      });
+
+      Log.d(`isLoggedIn ${await appPreferences.isLoggedIn}`, {
+        name: 'APP Preferences',
+      });
+
+      const appUsecase = container.resolve<AppUsecase>(DI_Type.AppUsecase);
+      Log.d(`getInitialHomeDataUseCase ${appUsecase.getInitialHomeDataUseCase}`, {
+        name: 'APP USECASE',
+      });
+      Log.d(`isLoggedInUseCase ${await appUsecase.isLoggedInUseCase}`, {
+        name: 'APP USECASE',
+      });
+      Log.d(`isDarkModeUseCase ${await appUsecase.isDarkModeUseCase}`, {
+        name: 'APP USECASE',
+      });
+      Log.d(`loadInitialResourceUseCase ${await appUsecase.loadInitialResourceUseCase}`, {
+        name: 'APP USECASE',
+      });
+
+      // const authUsecase = container.resolve<AuthUsecase>(DI_Type.AuthUsecase);
+      // await authUsecase.loginUsecase({username: 'test', password: '123456'});
+
+      // const notiUsecase = container.resolve<NotiUsecase>(DI_Type.NotiUsecase);
+      // const output = await notiUsecase.execute(true);
+      // Log.d(Log.prettyJson(output));
     }
 
     // Gọi hàm async để kiểm tra kết nối mạng
     checkNetworkAvailability();
 
-    Log.d(`${BottomTab.getLabel(BottomTab.home)}`, {name: 'BOTTOM LABEL'});
-    Log.d(`${BottomTab.getLabel(BottomTab.notifications)}`, {name: 'BOTTOM LABEL'});
-    Log.d(`${BottomTab.getLabel(BottomTab.setting)}`, {name: 'BOTTOM LABEL'});
+    // Log.d(`${BottomTab.getLabel(BottomTab.home)}`, {name: 'BOTTOM LABEL'});
+    // Log.d(`${BottomTab.getLabel(BottomTab.notifications)}`, {name: 'BOTTOM LABEL'});
+    // Log.d(`${BottomTab.getLabel(BottomTab.setting)}`, {name: 'BOTTOM LABEL'});
 
     // Log.d((2).plus(1));
     // Log.d(2?.minus(1));

@@ -8,6 +8,8 @@ module.exports = {
           shared: './src/shared',
           initializer: './src/initializer',
           domain: './src/domain',
+          data: './src/data',
+          presentation: './src/presentation',
         },
       },
     ],

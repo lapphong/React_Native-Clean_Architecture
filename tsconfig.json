@@ -5,7 +5,9 @@
     "paths": {
       "shared/*": ["./src/shared/*"],
       "initializer/*": ["./src/initializer/*"],
-      "domain/*": ["./src/domain/*"]
+      "domain/*": ["./src/domain/*"],
+      "data/*": ["./src/data/*"],
+      "presentation/*": ["./src/presentation/*"]
     },
     "strict": true,
     "noEmit": true,
