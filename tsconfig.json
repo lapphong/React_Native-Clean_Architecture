@@ -3,11 +3,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "shared/*": ["./src/shared/*"],
-      "initializer/*": ["./src/initializer/*"],
-      "domain/*": ["./src/domain/*"],
+      "app/*": ["./src/app/*"],
       "data/*": ["./src/data/*"],
-      "presentation/*": ["./src/presentation/*"]
+      "domain/*": ["./src/domain/*"],
+      "initializer/*": ["./src/initializer/*"],
+      "presentation/*": ["./src/presentation/*"],
+      "shared/*": ["./src/shared/*"]
     },
     "strict": true,
     "noEmit": true,

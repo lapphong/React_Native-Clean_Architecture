@@ -1,6 +1,6 @@
 import {DateTimeUtils, LogConfig} from 'shared/shared';
 
-enum LogColor {
+export enum LogColor {
   bright = '\x1b[1m',
   black = '\x1B[30m',
   white = '\x1B[37m',
@@ -8,6 +8,7 @@ enum LogColor {
   green = '\x1B[32m',
   yellow = '\x1B[33m',
   blue = '\x1B[34m',
+  puple = '\x1B[38;2;118;74;188m',
   cyan = '\x1B[36m',
 }
 

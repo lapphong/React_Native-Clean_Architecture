@@ -5,11 +5,12 @@ module.exports = {
       'module-resolver',
       {
         alias: {
-          shared: './src/shared',
-          initializer: './src/initializer',
-          domain: './src/domain',
+          app: './src/app',
           data: './src/data',
+          domain: './src/domain',
+          initializer: './src/initializer',
           presentation: './src/presentation',
+          shared: './src/shared',
         },
       },
     ],

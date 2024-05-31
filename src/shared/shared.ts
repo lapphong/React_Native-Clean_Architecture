@@ -35,7 +35,7 @@ import {CompleterUtils} from './utils/completer_utils.ts';
 import {DateTimeUtils} from './utils/date_time_utils.ts';
 import './utils/extension.ts';
 import {FileUtils} from './utils/file_utils.ts';
-import {Log} from './utils/log_utils.ts';
+import {Log, LogColor} from './utils/log_utils.ts';
 import {ParseUtils} from './utils/parse_utils.ts';
 import {ValidationUtils} from './utils/validation_utils.ts';
 import {ViewUtils} from './utils/view_utils.ts';
@@ -75,6 +75,7 @@ export {
   DateTimeUtils,
   // FileUtils,
   Log,
+  LogColor,
   ParseUtils,
   ValidationUtils,
   ViewUtils,

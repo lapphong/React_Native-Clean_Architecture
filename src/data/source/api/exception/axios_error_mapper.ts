@@ -22,7 +22,7 @@ export class AxiosErrorMapper extends ExceptionMapper<NetworkException> {
         case AxiosError.ERR_BAD_OPTION:
         case AxiosError.ERR_BAD_OPTION_VALUE:
         case AxiosError.ERR_BAD_REQUEST:
-          Log.e(`${exception.code}`, {name: 'case1'});
+          Log.e(`${exception.code}`, {name: 'handleBadResponse'.toUpperCase()});
           return this.handleBadResponse(exception.response);
 
         case AxiosError.ERR_NOT_SUPPORT:

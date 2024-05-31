@@ -53,7 +53,7 @@ export abstract class AppNavigator {
       barrierDismissible, // true
       useSafeArea, // false
       useRootNavigator, // true
-    }: {
+    }?: {
       barrierDismissible?: boolean;
       useSafeArea?: boolean;
       useRootNavigator?: boolean;

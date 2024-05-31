@@ -1,6 +1,13 @@
 class Constants {
   private constructor() {}
 
+  // QueryClient
+  static readonly staleTime = 5 * 60 * 1000;
+  static readonly gcTime = 10 * 60 * 1000;
+  static readonly refetchOnWindowFocus = false;
+  static readonly refetchOnReconnect = true;
+  static readonly refetchInterval = false;
+
   // Header
   static readonly basicAuthorization = 'Authorization';
   static readonly jwtAuthorization = 'JWT-Authorization';
