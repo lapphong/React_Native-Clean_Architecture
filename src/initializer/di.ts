@@ -21,9 +21,13 @@ import {
   NotiRepositoryImpl,
 } from 'data/data';
 import {AppNavigatorImpl} from 'presentation/presentation';
+import { CommonRedux } from 'app/base_redux/common_redux';
+import { AppRedux } from 'app/redux/app_redux';
 
 export enum DI_Type {
   NetworkingFactory = 'NetworkingFactory',
+  CommonRedux = 'CommonRedux',
+  AppRedux = 'AppRedux',
   AxiosErrorMapper = 'AxiosErrorMapper',
   ConnectivityHelper = 'ConnectivityHelper',
   AppInfoHelper = 'AppInfoHelper',
@@ -41,6 +45,10 @@ export enum DI_Type {
 }
 
 container.registerSingleton<NetworkingFactory>(DI_Type.NetworkingFactory, NetworkingFactory);
+container.register<CommonRedux>(DI_Type.CommonRedux, CommonRedux);
+container.register<AppRedux>(DI_Type.AppRedux, {
+  useFactory: c => new AppRedux(c.resolve<AppUsecase>(DI_Type.AppUsecase)),
+});
 container.registerSingleton<AxiosErrorMapper>(DI_Type.AxiosErrorMapper, AxiosErrorMapper);
 container.registerSingleton<AppInfoHelper>(DI_Type.AppInfoHelper, AppInfoHelper);
 container.registerSingleton<ConnectivityHelper>(DI_Type.ConnectivityHelper, ConnectivityHelper);
