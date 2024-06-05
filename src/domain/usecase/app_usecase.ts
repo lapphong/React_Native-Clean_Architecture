@@ -1,10 +1,4 @@
-import {
-  AppNavigator,
-  AppPopupInfo,
-  AppRepository,
-  InitialAppRoute,
-  PageRouteInfo,
-} from 'domain/domain';
+import {AppNavigator, AppPopupInfo, AppRepository, PageRouteInfo} from 'domain/domain';
 import {injectable, inject} from 'tsyringe';
 
 @injectable()
@@ -24,12 +18,6 @@ export class AppUsecase {
 
   get isDarkModeUseCase(): Promise<boolean> {
     return this._appRepository.isDarkMode;
-  }
-
-  get loadInitialResourceUseCase(): Promise<InitialAppRoute> {
-    return this._appRepository.isLoggedIn.then(value =>
-      value ? InitialAppRoute.main : InitialAppRoute.login,
-    );
   }
 
   async saveIsDarkModeUseCase(isDarkMode: boolean): Promise<void> {
@@ -55,10 +43,9 @@ export class AppUsecase {
           message: 'Bạn có chắc muốn đăng xuất',
           onPressed: async () => {
             await this._appRepository.clearCurrentUserData();
-            await this._navigator.replaceAll([loginRoute]);
+            this._navigator.replaceAll(loginRoute);
           },
         }),
-        {useRootNavigator: true},
       );
     }
   }

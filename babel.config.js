@@ -6,6 +6,7 @@ module.exports = {
       {
         alias: {
           app: './src/app',
+          assets: './src/assets',
           data: './src/data',
           domain: './src/domain',
           initializer: './src/initializer',

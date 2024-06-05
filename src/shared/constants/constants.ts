@@ -1,6 +1,8 @@
 class Constants {
   private constructor() {}
 
+  static readonly fontDefault = 'Cupertino';
+
   // QueryClient
   static readonly staleTime = 5 * 60 * 1000;
   static readonly gcTime = 10 * 60 * 1000;

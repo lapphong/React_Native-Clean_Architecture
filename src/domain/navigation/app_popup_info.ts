@@ -32,6 +32,12 @@ export class AppPopupInfo {
   }): AppPopupInfo {
     return new AppPopupInfo('errorWithRetryDialog', message, undefined, onCancel, onRetryPressed);
   }
+
+  get toString(): string {
+    return `AppPopupInfo: type:${this.type}, message:${this.message}, onPressed:${JSON.stringify(
+      this.onPressed,
+    )}, onCacel:${JSON.stringify(this.onCancel)}, onRetry:${JSON.stringify(this.onRetryPressed)}`;
+  }
 }
 
 // Usage examples:

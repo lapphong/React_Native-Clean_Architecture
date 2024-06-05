@@ -1,10 +1,5 @@
 import {Constants} from 'shared/shared';
 
-export enum InitialAppRoute {
-  login = 'login',
-  main = 'main',
-}
-
 export enum Gender {
   male = Constants.male,
   female = Constants.female,

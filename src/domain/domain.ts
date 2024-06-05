@@ -1,7 +1,7 @@
 // Entity
 import {LoadMoreOutput} from './entity/base/load_more_output';
 import {PagedList} from './entity/base/paged_list';
-import {InitialAppRoute, Gender, LanguageCode, BottomTab} from './entity/enum/enum';
+import {Gender, LanguageCode, BottomTab} from './entity/enum/enum';
 import {Msg} from './entity/notification/msg';
 import {Notification} from './entity/notification/notification';
 import {User} from './entity/user';
@@ -25,7 +25,6 @@ export {
   // Entity
   LoadMoreOutput,
   PagedList,
-  InitialAppRoute,
   Gender,
   LanguageCode,
   BottomTab,

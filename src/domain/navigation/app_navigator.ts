@@ -12,25 +12,17 @@ export abstract class AppNavigator {
 
   abstract get currentBottomTab(): number;
 
-  abstract getCurrentRouteName(useRootNavigator?: boolean): string; // false
+  abstract getCurrentRouteName(): string;
 
   abstract popUntilRootOfCurrentBottomTab(): void;
 
-  abstract navigateToBottomTab(index: number, notify?: boolean): void; // true
+  abstract push(pageRouteInfo: PageRouteInfo): void;
 
-  abstract push<T extends object | null>(pageRouteInfo: PageRouteInfo): Promise<T | null>;
+  abstract replace(pageRouteInfo: PageRouteInfo): void;
 
-  abstract replace<T extends object | null>(pageRouteInfo: PageRouteInfo): Promise<T | null>;
+  abstract replaceAll(pageRouteInfo: PageRouteInfo): void;
 
-  abstract replaceAll(listRouteInfo: PageRouteInfo[]): Promise<void>;
-
-  abstract pop<T extends object | null>({
-    result,
-    useRootNavigator, // false
-  }: {
-    result?: T | null;
-    useRootNavigator?: boolean;
-  }): Promise<boolean>;
+  abstract pop({result, useRootNavigator}: {result?: any; useRootNavigator?: boolean}): void;
 
   abstract popAndPush<T extends object | null, R extends object | null>(
     pageRouteInfo: PageRouteInfo,
@@ -47,18 +39,7 @@ export abstract class AppNavigator {
 
   abstract removeLast(): boolean;
 
-  abstract showDialog<T extends object | null>(
-    appPopupInfo: AppPopupInfo,
-    {
-      barrierDismissible, // true
-      useSafeArea, // false
-      useRootNavigator, // true
-    }?: {
-      barrierDismissible?: boolean;
-      useSafeArea?: boolean;
-      useRootNavigator?: boolean;
-    },
-  ): Promise<T | null>;
+  abstract showDialog(appPopupInfo: AppPopupInfo): Promise<void>;
 
   abstract showGeneralDialog<T extends object | null>(
     appPopupInfo: AppPopupInfo,
