@@ -5,6 +5,7 @@ import {DI_Type, container} from 'initializer/initializer';
 
 const commonRedux = container.resolve<CommonRedux>(DI_Type.CommonRedux);
 const appRedux = container.resolve<AppRedux>(DI_Type.AppRedux);
+
 const storeReducers = combineReducers({
   [commonRedux.slice.name]: commonRedux.slice.reducer,
   [appRedux.slice.name]: appRedux.slice.reducer,

@@ -7,9 +7,11 @@ import {AppDimen, AppRoute} from 'presentation/presentation';
 import {Dimensions, PixelRatio} from 'react-native';
 
 export const MyApp = () => {
-  const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
-  const devicePixelRatio = PixelRatio.get();
-  AppDimen.of(screenWidth, screenHeight, devicePixelRatio);
+  if (!AppDimen.current) {
+    const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
+    const devicePixelRatio = PixelRatio.get();
+    AppDimen.of(screenWidth, screenHeight, devicePixelRatio);
+  }
 
   const appRedux = container.resolve<AppRedux>(DI_Type.AppRedux);
   const isLoggedIn = useSelector(appRedux.getSelector).isLoggedIn;

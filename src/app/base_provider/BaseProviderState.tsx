@@ -8,7 +8,7 @@ import {TouchableWithoutFeedback, SafeAreaView, StatusBar} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {AppNavigator} from 'domain/domain';
 interface BaseProviderStateProps {
-  isAppWidget?: boolean;
+  // isAppWidget?: boolean;
 }
 
 export const BaseProviderState: React.FC<React.PropsWithChildren<BaseProviderStateProps>> = ({

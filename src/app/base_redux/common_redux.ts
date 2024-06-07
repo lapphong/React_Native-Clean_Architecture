@@ -5,7 +5,6 @@ import {BaseReduxState, BaseReduxEvents, BaseRedux} from './base_redux';
 
 export class CommonReduxState extends BaseReduxState {
   appExceptionWrapper?: AppExceptionWrapper;
-  loadingCount: number = 0;
   isLoading: boolean = false;
 }
 
@@ -17,18 +16,7 @@ export class CommonReduxEvents extends BaseReduxEvents<CommonReduxState> {
   createReducers(): Record<string, CaseReducer<CommonReduxState, PayloadAction<any>>> {
     return {
       loadingVisibilityEmitted: (state: Draft<CommonReduxState>, action: PayloadAction<any>) => {
-        return {
-          ...state,
-          isLoading:
-            state.loadingCount === 0 && action.payload.isLoading
-              ? true
-              : (state.loadingCount === 1 && !action.payload.isLoading) || state.loadingCount <= 0
-              ? false
-              : state.isLoading,
-          loadingCount: action.payload.isLoading
-            ? state.loadingCount.plus(1)
-            : state.loadingCount.minus(1),
-        };
+        return {...state, isLoading: action.payload};
       },
       exceptionEmitted: (state: Draft<CommonReduxState>, action: PayloadAction<any>) => {
         return {...state, appExceptionWrapper: action.payload};
@@ -43,12 +31,22 @@ export class CommonRedux extends BaseRedux<CommonReduxState, CommonReduxEvents> 
     super(new CommonReduxState(), new CommonReduxEvents());
   }
 
+  private _loadingCount: number = 0;
+
   showLoading(): void {
-    this.dispatchApp(this.slice.actions.loadingVisibilityEmitted({isLoading: true}));
+    if (this._loadingCount <= 0) {
+      this.dispatchApp(this.slice.actions.loadingVisibilityEmitted({isLoading: true}));
+    }
+
+    this._loadingCount++;
   }
 
   hideLoading(): void {
-    this.dispatchApp(this.slice.actions.loadingVisibilityEmitted({isLoading: false}));
+    if (this._loadingCount <= 1) {
+      this.dispatchApp(this.slice.actions.loadingVisibilityEmitted({isLoading: false}));
+    }
+
+    this._loadingCount--;
   }
 
   async addException(appExceptionWrapper: AppExceptionWrapper): Promise<void> {

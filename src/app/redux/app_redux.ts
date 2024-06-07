@@ -31,7 +31,7 @@ export class AppEvents extends BaseReduxEvents<AppState> {
         };
       },
       //   appLanguageChanged: (state: Draft<AppState>, action: PayloadAction<any>) => {
-      //     return (state = {...state, languageCode: action.payload});
+      //     return {...state, languageCode: action.payload};
       //   },
     };
   }
