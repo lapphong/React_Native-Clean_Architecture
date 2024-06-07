@@ -20,14 +20,15 @@ import {
   NetworkingFactory,
   NotiRepositoryImpl,
 } from 'data/data';
-import {AppNavigatorImpl} from 'presentation/presentation';
-import { CommonRedux } from 'app/base_redux/common_redux';
-import { AppRedux } from 'app/redux/app_redux';
+import {AppNavigatorImpl, AppPopupInfoMapper} from 'presentation/presentation';
+import {CommonRedux} from 'app/base_redux/common_redux';
+import {AppRedux} from 'app/redux/app_redux';
 
 export enum DI_Type {
   NetworkingFactory = 'NetworkingFactory',
   CommonRedux = 'CommonRedux',
   AppRedux = 'AppRedux',
+  AppPopupInfoMapper = 'AppPopupInfoMapper',
   AxiosErrorMapper = 'AxiosErrorMapper',
   ConnectivityHelper = 'ConnectivityHelper',
   AppInfoHelper = 'AppInfoHelper',
@@ -49,6 +50,7 @@ container.register<CommonRedux>(DI_Type.CommonRedux, CommonRedux);
 container.register<AppRedux>(DI_Type.AppRedux, {
   useFactory: c => new AppRedux(c.resolve<AppUsecase>(DI_Type.AppUsecase)),
 });
+container.registerSingleton<AppPopupInfoMapper>(DI_Type.AppPopupInfoMapper, AppPopupInfoMapper);
 container.registerSingleton<AxiosErrorMapper>(DI_Type.AxiosErrorMapper, AxiosErrorMapper);
 container.registerSingleton<AppInfoHelper>(DI_Type.AppInfoHelper, AppInfoHelper);
 container.registerSingleton<ConnectivityHelper>(DI_Type.ConnectivityHelper, ConnectivityHelper);
@@ -58,7 +60,7 @@ container.register<ConnectivityInterceptor>(DI_Type.ConnectivityInterceptor, {
 });
 container.registerSingleton<DeviceHelper>(DI_Type.DeviceHelper, DeviceHelper);
 container.register<AppNavigator>(DI_Type.AppNavigator, {
-  useFactory: c => new AppNavigatorImpl(),
+  useFactory: c => new AppNavigatorImpl(c.resolve<AppPopupInfoMapper>(DI_Type.AppPopupInfoMapper)),
 });
 container.registerSingleton<AppPreferences>(DI_Type.AppPreferences, AppPreferences);
 container.register<AppRepository>(DI_Type.AppRepository, {

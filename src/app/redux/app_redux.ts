@@ -18,17 +18,17 @@ export class AppEvents extends BaseReduxEvents<AppState> {
   createReducers(): Record<string, CaseReducer<AppState, PayloadAction<any>>> {
     return {
       isLoggedInStatusChanged: (state: Draft<AppState>, action: PayloadAction<any>) => {
-        return (state = {...state, isLoggedIn: action.payload});
+        return {...state, isLoggedIn: action.payload};
       },
       appThemeChanged: (state: Draft<AppState>, action: PayloadAction<any>) => {
-        return (state = {...state, isDarkTheme: action.payload});
+        return {...state, isDarkTheme: action.payload};
       },
       appInitiated: (state: Draft<AppState>, action: PayloadAction<any>) => {
-        return (state = {
+        return {
           ...state,
           isDarkTheme: action.payload.isDarkTheme,
           isLoggedIn: action.payload.isLoggedIn,
-        });
+        };
       },
       //   appLanguageChanged: (state: Draft<AppState>, action: PayloadAction<any>) => {
       //     return (state = {...state, languageCode: action.payload});

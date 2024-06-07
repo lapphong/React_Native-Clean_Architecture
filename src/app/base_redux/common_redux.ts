@@ -17,7 +17,7 @@ export class CommonReduxEvents extends BaseReduxEvents<CommonReduxState> {
   createReducers(): Record<string, CaseReducer<CommonReduxState, PayloadAction<any>>> {
     return {
       loadingVisibilityEmitted: (state: Draft<CommonReduxState>, action: PayloadAction<any>) => {
-        return (state = {
+        return {
           ...state,
           isLoading:
             state.loadingCount === 0 && action.payload.isLoading
@@ -28,10 +28,10 @@ export class CommonReduxEvents extends BaseReduxEvents<CommonReduxState> {
           loadingCount: action.payload.isLoading
             ? state.loadingCount.plus(1)
             : state.loadingCount.minus(1),
-        });
+        };
       },
       exceptionEmitted: (state: Draft<CommonReduxState>, action: PayloadAction<any>) => {
-        return (state = {...state, appExceptionWrapper: action.payload});
+        return {...state, appExceptionWrapper: action.payload};
       },
     };
   }

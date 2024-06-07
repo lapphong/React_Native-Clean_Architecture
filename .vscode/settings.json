@@ -7,7 +7,7 @@
   "editor.fontLigatures": true,
   "terminal.integrated.fontFamily": "Monospace",
   "terminal.integrated.fontSize": 14,
-  "editor.lineHeight": 1.75,
+  "editor.lineHeight": 2,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "explorer.fileNesting.patterns": {
