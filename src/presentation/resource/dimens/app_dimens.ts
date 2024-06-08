@@ -22,7 +22,7 @@ export class AppDimen {
 
     this.current = screen;
     if (LogConfig.enableGeneralLog) {
-      Log.d(this.current.toString, {name: 'AppDimen'});
+      Log.d(this.current.toString, {name: 'APP_DIMEN'});
     }
 
     return this.current;

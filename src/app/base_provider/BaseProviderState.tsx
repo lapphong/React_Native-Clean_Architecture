@@ -1,15 +1,14 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {AppRedux, CommonRedux} from 'app/app';
+import {TouchableWithoutFeedback, SafeAreaView, StatusBar} from 'react-native';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {appRedux, commonRedux} from 'app/app';
+import {AppNavigator} from 'domain/domain';
 import {DI_Type, container} from 'initializer/initializer';
 import {AppLoading, AppNavigatorImpl, useTheme} from 'presentation/presentation';
 import {ViewUtils} from 'shared/shared';
-import {TouchableWithoutFeedback, SafeAreaView, StatusBar} from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {AppNavigator} from 'domain/domain';
-interface BaseProviderStateProps {
-  // isAppWidget?: boolean;
-}
+
+interface BaseProviderStateProps {}
 
 export const BaseProviderState: React.FC<React.PropsWithChildren<BaseProviderStateProps>> = ({
   children,
@@ -19,10 +18,7 @@ export const BaseProviderState: React.FC<React.PropsWithChildren<BaseProviderSta
   const appNavigator = container.resolve<AppNavigator>(DI_Type.AppNavigator);
   (appNavigator as AppNavigatorImpl).initialize();
 
-  const appRedux = container.resolve<AppRedux>(DI_Type.AppRedux);
   const appState = useSelector(appRedux.getSelector);
-
-  const commonRedux = container.resolve<CommonRedux>(DI_Type.CommonRedux);
   const commonState = useSelector(commonRedux.getSelector);
 
   return (

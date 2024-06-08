@@ -3,22 +3,22 @@ import {AppExceptionWrapper} from 'shared/shared';
 import {injectable} from 'tsyringe';
 import {BaseReduxState, BaseReduxEvents, BaseRedux} from './base_redux';
 
-export class CommonReduxState extends BaseReduxState {
+export class CommonState extends BaseReduxState {
   appExceptionWrapper?: AppExceptionWrapper;
   isLoading: boolean = false;
 }
 
-export class CommonReduxEvents extends BaseReduxEvents<CommonReduxState> {
+export class CommonEvents extends BaseReduxEvents<CommonState> {
   get name(): string {
     return 'CommonRedux';
   }
 
-  createReducers(): Record<string, CaseReducer<CommonReduxState, PayloadAction<any>>> {
+  createReducers(): Record<string, CaseReducer<CommonState, PayloadAction<any>>> {
     return {
-      loadingVisibilityEmitted: (state: Draft<CommonReduxState>, action: PayloadAction<any>) => {
+      loadingVisibilityEmitted: (state: Draft<CommonState>, action: PayloadAction<any>) => {
         return {...state, isLoading: action.payload};
       },
-      exceptionEmitted: (state: Draft<CommonReduxState>, action: PayloadAction<any>) => {
+      exceptionEmitted: (state: Draft<CommonState>, action: PayloadAction<any>) => {
         return {...state, appExceptionWrapper: action.payload};
       },
     };
@@ -26,16 +26,16 @@ export class CommonReduxEvents extends BaseReduxEvents<CommonReduxState> {
 }
 
 @injectable()
-export class CommonRedux extends BaseRedux<CommonReduxState, CommonReduxEvents> {
+export class CommonRedux extends BaseRedux<CommonState, CommonEvents> {
   constructor() {
-    super(new CommonReduxState(), new CommonReduxEvents());
+    super(new CommonState(), new CommonEvents());
   }
 
   private _loadingCount: number = 0;
 
   showLoading(): void {
     if (this._loadingCount <= 0) {
-      this.dispatchApp(this.slice.actions.loadingVisibilityEmitted({isLoading: true}));
+      this.dispatchApp(this.slice.actions.loadingVisibilityEmitted(true));
     }
 
     this._loadingCount++;
@@ -43,16 +43,14 @@ export class CommonRedux extends BaseRedux<CommonReduxState, CommonReduxEvents> 
 
   hideLoading(): void {
     if (this._loadingCount <= 1) {
-      this.dispatchApp(this.slice.actions.loadingVisibilityEmitted({isLoading: false}));
+      this.dispatchApp(this.slice.actions.loadingVisibilityEmitted(false));
     }
 
     this._loadingCount--;
   }
 
   async addException(appExceptionWrapper: AppExceptionWrapper): Promise<void> {
-    this.dispatchApp(
-      this.slice.actions.exceptionEmitted({appExceptionWrapper: appExceptionWrapper}),
-    );
+    this.dispatchApp(this.slice.actions.exceptionEmitted(appExceptionWrapper));
     return appExceptionWrapper.exceptionCompleter?.future;
   }
 }

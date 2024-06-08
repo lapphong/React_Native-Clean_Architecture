@@ -3,8 +3,8 @@ import observerMiddleware from 'app/base_redux/redux_observer';
 import {AppRedux, CommonRedux} from 'app/app';
 import {DI_Type, container} from 'initializer/initializer';
 
-const commonRedux = container.resolve<CommonRedux>(DI_Type.CommonRedux);
-const appRedux = container.resolve<AppRedux>(DI_Type.AppRedux);
+export const commonRedux = container.resolve<CommonRedux>(DI_Type.CommonRedux);
+export const appRedux = container.resolve<AppRedux>(DI_Type.AppRedux);
 
 const storeReducers = combineReducers({
   [commonRedux.slice.name]: commonRedux.slice.reducer,

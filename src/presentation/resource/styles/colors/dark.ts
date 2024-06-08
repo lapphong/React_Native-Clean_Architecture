@@ -37,6 +37,6 @@ export const ThemeColorDark: ThemeColor = {
   baseColor: AppColors.black,
 
   // ---> Loading Indicator
-  backgroundIndicator: AppColors.black10,
+  backgroundIndicator: AppColors.black,
   itemIndicator: AppColors.purple,
 };

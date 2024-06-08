@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import BootSplash from 'react-native-bootsplash';
-import {container, DI_Type} from 'initializer/initializer';
-import {AppRedux} from './app';
+import {AppInitializer} from 'initializer/initializer';
+import {appRedux} from 'app/app';
 import {useSelector} from 'react-redux';
-import {AppDimen, AppRoute} from 'presentation/presentation';
-import {Dimensions, PixelRatio} from 'react-native';
+import {AppDimen, AppLoading, AppRoute, useTheme} from 'presentation/presentation';
+import {Dimensions, PixelRatio, View} from 'react-native';
 
 export const MyApp = () => {
   if (!AppDimen.current) {
@@ -13,13 +13,13 @@ export const MyApp = () => {
     AppDimen.of(screenWidth, screenHeight, devicePixelRatio);
   }
 
-  const appRedux = container.resolve<AppRedux>(DI_Type.AppRedux);
   const isLoggedIn = useSelector(appRedux.getSelector).isLoggedIn;
 
   const [isInit, setIsInit] = useState(false);
 
   useEffect(() => {
     const init = async () => {
+      await AppInitializer.init();
       await appRedux._onAppInitiated();
     };
 
@@ -29,6 +29,14 @@ export const MyApp = () => {
     });
   }, []);
 
-  if (!isInit) return null;
+  if (!isInit) {
+    const theme = useTheme();
+    return (
+      <View style={{flex: 1, backgroundColor: theme.getTheme.colorScheme.background}}>
+        <AppLoading theme={theme} />
+      </View>
+    );
+  }
+
   return <AppRoute isLogged={isLoggedIn} />;
 };

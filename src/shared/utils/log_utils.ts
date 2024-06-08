@@ -41,6 +41,13 @@ export class Log {
     return prettyJson.replace(/^{/, '{').replace(/}$/, '}').replace(/\n/g, '\n   ');
   }
 
+  static readonly maxNameLength = 25;
+  private static padName(name: string, logPosition: number): string {
+    const nameWithBrackets = `[${name}]`;
+    const paddingNeeded = logPosition - nameWithBrackets.length;
+    return nameWithBrackets + ' '.repeat(paddingNeeded > 0 ? paddingNeeded : 0);
+  }
+
   private static _log(
     message: string,
     {
@@ -59,8 +66,9 @@ export class Log {
   ): void {
     if (this._enableLog) {
       const time = DateTimeUtils.getCurrentTimeFormatted();
+      const paddedName = this.padName(name, this.maxNameLength);
       console.log(
-        LogColor.bright + LogColor.yellow + `[${time}]` + color + `[${name}]\t| ` + message,
+        LogColor.bright + LogColor.yellow + `[${time}]` + color + paddedName + ' | ' + message,
       );
 
       if (error) console.error(LogColor.bright + LogColor.red + error);

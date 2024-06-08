@@ -1,6 +1,5 @@
-import {AppRedux, BaseProviderState} from 'app/app';
+import {BaseProviderState, appRedux} from 'app/app';
 import Assets from 'assets/assets';
-import {DI_Type, container} from 'initializer/initializer';
 import {AppButton, AppColors, AppTextField, useTheme} from 'presentation/presentation';
 import React from 'react';
 import {StyleSheet, View, ScrollView, Image, Switch} from 'react-native';
@@ -9,7 +8,6 @@ import {useSelector} from 'react-redux';
 export const LoginScreen = () => {
   const theme = useTheme();
 
-  const appRedux = container.resolve<AppRedux>(DI_Type.AppRedux);
   const isDarkTheme = useSelector(appRedux.getSelector).isDarkTheme;
 
   return (
