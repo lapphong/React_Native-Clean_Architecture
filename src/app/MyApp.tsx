@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import BootSplash from 'react-native-bootsplash';
-import {AppInitializer} from 'initializer/initializer';
-import {appRedux} from 'app/app';
-import {useSelector} from 'react-redux';
-import {AppDimen, AppLoading, AppRoute, useTheme} from 'presentation/presentation';
 import {Dimensions, PixelRatio, View} from 'react-native';
+import {useSelector} from 'react-redux';
+import BootSplash from 'react-native-bootsplash';
+import {appRedux} from 'app/app';
+import {AppInitializer} from 'initializer/initializer';
+import {AppDimen, AppLoading, AppRoute, useTheme} from 'presentation/presentation';
 
 export const MyApp = () => {
   if (!AppDimen.current) {
@@ -15,21 +15,23 @@ export const MyApp = () => {
 
   const isLoggedIn = useSelector(appRedux.getSelector).isLoggedIn;
 
-  const [isInit, setIsInit] = useState(false);
+  const [isInitiated, setIsInitiated] = useState(false);
 
   useEffect(() => {
-    const init = async () => {
-      await AppInitializer.init();
-      await appRedux._onAppInitiated();
-    };
+    if (!isInitiated) {
+      const init = async () => {
+        await AppInitializer.init();
+        await appRedux.onAppInitiated();
+      };
 
-    init().finally(async () => {
-      await BootSplash.hide({fade: true});
-      setIsInit(true);
-    });
+      init().finally(async () => {
+        await BootSplash.hide({fade: true});
+        setIsInitiated(true);
+      });
+    }
   }, []);
 
-  if (!isInit) {
+  if (!isInitiated) {
     const theme = useTheme();
     return (
       <View style={{flex: 1, backgroundColor: theme.getTheme.colorScheme.background}}>

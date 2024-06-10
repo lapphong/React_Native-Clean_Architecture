@@ -4,7 +4,7 @@ import {injectable} from 'tsyringe';
 import {BaseReduxState, BaseReduxEvents, BaseRedux} from './base_redux';
 
 export class CommonState extends BaseReduxState {
-  appExceptionWrapper?: AppExceptionWrapper;
+  appExceptionWrapper: AppExceptionWrapper | null = null;
   isLoading: boolean = false;
 }
 

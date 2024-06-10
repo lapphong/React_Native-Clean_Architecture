@@ -24,11 +24,11 @@ export abstract class BaseReduxEvents<S extends BaseReduxState> {
 export abstract class BaseRedux<S extends BaseReduxState, R extends BaseReduxEvents<S>> {
   private createSlice: Slice<S, Record<string, CaseReducer<S, PayloadAction<any>>>>;
 
-  private navigator!: AppNavigator;
-  private appRedux!: AppRedux;
-  private exceptionHandler!: ExceptionHandler;
-  private disposeBag!: DisposeBag;
-  private _commonRedux!: CommonRedux;
+  public navigator!: AppNavigator;
+  public appRedux!: AppRedux;
+  public exceptionHandler!: ExceptionHandler;
+  public disposeBag!: DisposeBag;
+  public _commonRedux!: CommonRedux;
 
   set commonRedux(commonRedux: CommonRedux) {
     this._commonRedux = commonRedux;
@@ -65,7 +65,7 @@ export abstract class BaseRedux<S extends BaseReduxState, R extends BaseReduxEve
     );
   }
 
-  async runBlocCatching({
+  async runReduxCatching({
     action,
     doOnRetry,
     doOnError,
@@ -118,7 +118,7 @@ export abstract class BaseRedux<S extends BaseReduxState, R extends BaseReduxEve
                 (handleRetry && maxRetries !== 1
                   ? async () => {
                       recursion = new CompleterUtils();
-                      await this.runBlocCatching({
+                      await this.runReduxCatching({
                         action,
                         doOnRetry,
                         doOnError,
