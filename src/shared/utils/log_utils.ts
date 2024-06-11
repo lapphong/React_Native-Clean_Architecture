@@ -5,7 +5,7 @@ export enum LogColor {
   black = '\x1B[30m',
   white = '\x1B[37m',
   red = '\x1b[31m',
-  green = '\x1B[32m',
+  green = '\x1B[38;2;65;184;131m',
   yellow = '\x1B[33m',
   blue = '\x1B[34m',
   puple = '\x1B[38;2;118;74;188m',

@@ -19,15 +19,11 @@ export class AppNavigatorImpl extends AppNavigator {
   }
 
   initialize() {
-    if (!this._isInitialized) {
-      this.route = useRoute();
-      this.navigation = useNavigation<NativeStackNavigationProp<any>>();
-      this.navigationState = useNavigationState(state => state);
-      this._isInitialized = true;
-    }
+    this.route = useRoute();
+    this.navigation = useNavigation<NativeStackNavigationProp<any>>();
+    this.navigationState = useNavigationState(state => state);
   }
 
-  private _isInitialized: boolean = false;
   public route!: RouteProp<any, any>;
   public navigation!: NativeStackNavigationProp<any>;
   public navigationState: any;

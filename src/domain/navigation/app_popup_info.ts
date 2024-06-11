@@ -1,4 +1,4 @@
-export type Callback = () => void;
+export type Callback = (() => void) | (() => Promise<void>);
 
 export class AppPopupInfo {
   private constructor(

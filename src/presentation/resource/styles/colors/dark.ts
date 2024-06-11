@@ -18,7 +18,7 @@ export const ThemeColorDark: ThemeColor = {
   error: AppColors.red10,
   textInputBorderColor: AppColors.purple,
   hintTextColor: AppColors.grey10,
-  disableBackgroundColor: AppColors.grey11,
+  disableBackgroundColor: AppColors.grey2,
 
   // ---> Button
   textColor: AppColors.purple,

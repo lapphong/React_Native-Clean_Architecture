@@ -33,6 +33,7 @@ import {DeviceHelper, DeviceType} from './helper/device_helper.ts';
 // Utils
 import {CompleterUtils} from './utils/completer_utils.ts';
 import {DateTimeUtils} from './utils/date_time_utils.ts';
+import { DebounceUtils } from './utils/debounce_utils.ts';
 import './utils/extension.ts';
 import {FileUtils} from './utils/file_utils.ts';
 import {Log, LogColor} from './utils/log_utils.ts';
@@ -73,6 +74,7 @@ export {
   // Utils
   CompleterUtils,
   DateTimeUtils,
+  DebounceUtils,
   // FileUtils,
   Log,
   LogColor,

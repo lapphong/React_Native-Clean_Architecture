@@ -1,17 +1,20 @@
-import {BaseProviderState, appRedux} from 'app/app';
-import Assets from 'assets/assets';
-import {AppButton, AppColors, AppTextField, useTheme} from 'presentation/presentation';
 import React from 'react';
-import {StyleSheet, View, ScrollView, Image, Switch} from 'react-native';
 import {useSelector} from 'react-redux';
+import {StyleSheet, View, ScrollView, Image, Switch, Text} from 'react-native';
+import Assets from 'assets/assets';
+import {BaseProviderState, appRedux, loginRedux} from 'app/app';
+import {AppButton, AppColors, AppTextField, useTheme} from 'presentation/presentation';
+import {DebounceUtils} from 'shared/shared';
 
 export const LoginScreen = () => {
   const theme = useTheme();
 
+  const loginState = useSelector(loginRedux.getSelector);
   const isDarkTheme = useSelector(appRedux.getSelector).isDarkTheme;
+  const debounce = DebounceUtils.getInstance();
 
   return (
-    <BaseProviderState>
+    <BaseProviderState redux={loginRedux}>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.scrollView}>
@@ -22,7 +25,7 @@ export const LoginScreen = () => {
             style={{marginBottom: 20}}
             value={isDarkTheme}
             onValueChange={async value => {
-              setTimeout(async () => await appRedux._onAppThemeChanged(value));
+              debounce.run(async () => await appRedux.onAppThemeChanged(value));
             }}
           />
           <Image
@@ -31,7 +34,7 @@ export const LoginScreen = () => {
           />
           <AppTextField
             theme={theme}
-            onChangeText={text => {}}
+            onChangeText={text => debounce.run(() => loginRedux.onEmailTextFieldChanged(text))}
             onFocus={() => {}}
             iconName="email-outline"
             label="Email"
@@ -40,7 +43,7 @@ export const LoginScreen = () => {
           />
           <AppTextField
             theme={theme}
-            onChangeText={text => {}}
+            onChangeText={text => debounce.run(() => loginRedux.onPasswordTextFieldChanged(text))}
             onFocus={() => {}}
             iconName="lock-outline"
             label="Password"
@@ -48,11 +51,30 @@ export const LoginScreen = () => {
             error={''}
             password
           />
+          {loginState.onPageError && (
+            <Text style={[theme.getTheme.textTheme.labelLarge, {color: AppColors.purple}]}>
+              {loginState.onPageError}
+            </Text>
+          )}
           <AppButton
             theme={theme}
             text="Login"
-            background={theme.getTheme.elevatedButtonTheme.backgroundColor}
-            onPressed={() => {}}
+            background={
+              loginState.isLoginButtonEnabled
+                ? theme.getTheme.elevatedButtonTheme.backgroundColor
+                : theme.getTheme.elevatedButtonTheme.disableBackgroundColor
+            }
+            onPressed={
+              loginState.isLoginButtonEnabled
+                ? async () => {
+                    await loginRedux.onLoginButtonPressed(
+                      loginState.email,
+                      loginState.password,
+                      loginState.onPageError,
+                    );
+                  }
+                : undefined
+            }
           />
         </View>
       </ScrollView>

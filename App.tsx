@@ -11,7 +11,7 @@ const App = () => {
     <Provider store={store}>
       <NavigationContainer>
         <ThemeContext.Provider value={theme}>
-          <BaseProviderState redux={appRedux} isNewAppNavigator={false}>
+          <BaseProviderState redux={appRedux}>
             <MyApp />
           </BaseProviderState>
         </ThemeContext.Provider>

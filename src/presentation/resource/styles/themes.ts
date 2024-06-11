@@ -67,6 +67,7 @@ export class ThemeData {
         // elevation: 0,
         backgroundColor: dataThemeColor.backgroundButtonColor,
         textButtonColor: dataThemeColor.textButtonColor,
+        disableBackgroundColor: dataThemeColor.disableBackgroundColor,
         // disabledForegroundColor: AppColors2.white,
         // disabledBackgroundColor: dataThemeColor.disableBackgroundColor,
         // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
@@ -120,6 +121,7 @@ export type ThemeObject = {
   elevatedButtonTheme: {
     backgroundColor: string;
     textButtonColor: string;
+    disableBackgroundColor:string,
   };
   indicator: {
     backgroundIndicator: string;

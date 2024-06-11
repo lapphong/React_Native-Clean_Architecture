@@ -87,9 +87,10 @@ export class AppRedux extends BaseRedux<AppState, AppEvents> {
 
   async onAppLogoutPressed(): Promise<void> {
     await this.runReduxCatching({
-      action: async () => {
-        // await this._appUsecase.logoutUseCase(LoginRoute());
-      },
+      action: async () =>
+        await this._appUsecase.logoutUseCase().then(value => {
+          if (value) this.onIsLoggedInStatusChanged(false);
+        }),
     });
   }
 }

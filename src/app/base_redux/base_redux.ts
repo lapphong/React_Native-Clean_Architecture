@@ -90,6 +90,7 @@ export abstract class BaseRedux<S extends BaseReduxState, R extends BaseReduxEve
   }): Promise<void> {
     let recursion: CompleterUtils<void> | undefined;
     try {
+      this.commonRedux.addException(null);
       await doOnSubscribe?.();
       if (handleLoading) {
         this.commonRedux.showLoading();

@@ -49,8 +49,8 @@ export class CommonRedux extends BaseRedux<CommonState, CommonEvents> {
     this._loadingCount--;
   }
 
-  async addException(appExceptionWrapper: AppExceptionWrapper): Promise<void> {
+  async addException(appExceptionWrapper: AppExceptionWrapper | null): Promise<void> {
     this.dispatchApp(this.slice.actions.exceptionEmitted(appExceptionWrapper));
-    return appExceptionWrapper.exceptionCompleter?.future;
+    return appExceptionWrapper?.exceptionCompleter?.future;
   }
 }

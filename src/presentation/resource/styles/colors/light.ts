@@ -16,9 +16,9 @@ export const ThemeColorLight: ThemeColor = {
   appbarTitleColor: '#1D1E2C',
 
   error: AppColors.red10,
-  disableBackgroundColor: AppColors.grey11,
   textInputBorderColor: AppColors.grey10,
   hintTextColor: AppColors.grey10,
+  disableBackgroundColor: AppColors.grey2,
 
   // ---> Button
   textColor: AppColors.black,

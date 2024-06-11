@@ -1,4 +1,4 @@
-import {AppNavigator, AppPopupInfo, AppRepository, PageRouteInfo} from 'domain/domain';
+import {AppNavigator, AppPopupInfo, AppRepository} from 'domain/domain';
 import {injectable, inject} from 'tsyringe';
 
 @injectable()
@@ -36,17 +36,22 @@ export class AppUsecase {
     await this._appRepository.clearCurrentUserData();
   }
 
-  async logoutUseCase(loginRoute: PageRouteInfo): Promise<void> {
+  async logoutUseCase(): Promise<boolean> {
     if (await this.isLoggedInUseCase) {
-      await this._navigator.showDialog(
-        AppPopupInfo.confirmDialog({
-          message: 'Bạn có chắc muốn đăng xuất',
-          onPressed: async () => {
-            await this._appRepository.clearCurrentUserData();
-            this._navigator.replaceAll(loginRoute);
-          },
-        }),
-      );
+      const result = await new Promise<boolean>(resolve => {
+        this._navigator.showDialog(
+          AppPopupInfo.confirmDialog({
+            message: 'Bạn có chắc muốn đăng xuất',
+            onPressed: async () => {
+              await this._appRepository.clearCurrentUserData();
+              resolve(true);
+            },
+            onCancel: () => resolve(false),
+          }),
+        );
+      });
+      return result;
     }
+    return false;
   }
 }

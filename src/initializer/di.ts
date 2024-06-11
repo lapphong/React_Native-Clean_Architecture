@@ -23,11 +23,15 @@ import {
 import {AppNavigatorImpl, AppPopupInfoMapper} from 'presentation/presentation';
 import {CommonRedux} from 'app/base_redux/common_redux';
 import {AppRedux} from 'app/redux/app_redux';
+import {LoginRedux} from 'app/redux/login_redux';
+import {MainRedux} from 'app/redux/main_redux';
 
 export enum DI_Type {
   NetworkingFactory = 'NetworkingFactory',
   CommonRedux = 'CommonRedux',
   AppRedux = 'AppRedux',
+  LoginRedux = 'LoginRedux',
+  MainRedux = 'MainRedux',
   AppPopupInfoMapper = 'AppPopupInfoMapper',
   AxiosErrorMapper = 'AxiosErrorMapper',
   ConnectivityHelper = 'ConnectivityHelper',
@@ -47,8 +51,12 @@ export enum DI_Type {
 
 container.registerSingleton<NetworkingFactory>(DI_Type.NetworkingFactory, NetworkingFactory);
 container.register<CommonRedux>(DI_Type.CommonRedux, CommonRedux);
+container.register<MainRedux>(DI_Type.MainRedux, MainRedux);
 container.register<AppRedux>(DI_Type.AppRedux, {
   useFactory: c => new AppRedux(c.resolve<AppUsecase>(DI_Type.AppUsecase)),
+});
+container.register<LoginRedux>(DI_Type.LoginRedux, {
+  useFactory: c => new LoginRedux(c.resolve<AuthUsecase>(DI_Type.AuthUsecase)),
 });
 container.registerSingleton<AppPopupInfoMapper>(DI_Type.AppPopupInfoMapper, AppPopupInfoMapper);
 container.registerSingleton<AxiosErrorMapper>(DI_Type.AxiosErrorMapper, AxiosErrorMapper);

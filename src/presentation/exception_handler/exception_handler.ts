@@ -16,27 +16,25 @@ export class ExceptionHandler {
         const exception = appExceptionWrapper.appException as NetworkException;
         switch (exception.kind) {
           case NetworkExceptionsKind.noInternetConnection:
-            await this._showErrorDialogWithRetry({
+            return await this._showErrorDialogWithRetry({
               message: message,
-              onRetryPressed: async () => {
-                this.navigator.pop({useRootNavigator: false});
-                await appExceptionWrapper.doOnRetry?.();
-              },
+              onRetryPressed: async () => await appExceptionWrapper.doOnRetry?.(),
             });
           case NetworkExceptionsKind.refreshTokenFailed:
-            await this._showErrorDialog({
+            return await this._showErrorDialog({
               isRefreshTokenFailed: true,
               message: message,
-              onPressed: () => this.navigator.pop({useRootNavigator: false}),
+              onPressed: () => {
+                // TODO: handle refresh token here.
+              },
             });
           default:
-            this._showErrorSnackBar({message: message});
-            break;
+            return this._showErrorSnackBar({message: message});
         }
       case AppExceptionType.parse:
         return this._showErrorSnackBar({message: message});
       case AppExceptionType.validation:
-        await this._showErrorDialog({message: message});
+        return await this._showErrorDialog({message: message});
     }
   }
 

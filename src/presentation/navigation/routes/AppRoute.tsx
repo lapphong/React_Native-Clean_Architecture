@@ -1,6 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
-import {LoginScreen, MainScreen} from 'presentation/presentation';
+import {navigator} from 'app/app';
+import {AppNavigatorImpl, LoginScreen, MainScreen} from 'presentation/presentation';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -18,6 +19,7 @@ export const AppRoute = ({isLogged = false}: {isLogged: boolean}) => {
 };
 
 export const AppAuthRoute = () => {
+  (navigator as AppNavigatorImpl).initialize();
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
@@ -26,6 +28,7 @@ export const AppAuthRoute = () => {
 };
 
 export const AppMainRoute = () => {
+  (navigator as AppNavigatorImpl).initialize();
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="MainScreen" component={MainScreen} />

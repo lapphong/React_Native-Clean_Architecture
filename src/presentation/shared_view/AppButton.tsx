@@ -7,7 +7,7 @@ interface AppButtonProps {
   text: string;
   background?: string;
   width?: number;
-  onPressed: () => void;
+  onPressed?: () => void;
 }
 
 export const AppButton: React.FC<AppButtonProps> = ({
@@ -15,7 +15,7 @@ export const AppButton: React.FC<AppButtonProps> = ({
   text,
   background = AppColors.blue,
   width,
-  onPressed = () => {},
+  onPressed,
 }) => {
   return (
     <TouchableOpacity
