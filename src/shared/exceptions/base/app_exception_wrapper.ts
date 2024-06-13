@@ -8,6 +8,10 @@ export class AppExceptionWrapper {
   ) {}
 
   toString(): string {
-    return `AppExceptionWrapper(appException: ${this.appException}, exceptionCompleter: ${this.exceptionCompleter}, doOnRetry: ${this.doOnRetry})`;
+    return `AppExceptionWrapper(
+      appException: ${this.appException},
+      exceptionCompleter: ${JSON.stringify(this.exceptionCompleter)},
+      doOnRetry: ${JSON.stringify(this.doOnRetry)}
+    )`;
   }
 }

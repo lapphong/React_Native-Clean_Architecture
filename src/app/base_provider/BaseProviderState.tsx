@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {useSelector} from 'react-redux';
 import {TouchableWithoutFeedback, SafeAreaView, StatusBar} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -56,14 +56,16 @@ export const BaseProviderState = <B extends Redux<any, any>>({
   const appState: AppState = useSelector(appRedux.getSelector);
   const commonState: CommonState = useSelector(commonRedux.getSelector);
 
-  const currentAppExceptionWrapper = useMemo(
-    () => commonState.appExceptionWrapper,
-    [commonState.appExceptionWrapper],
-  );
-
+  const appExceptionWrapper = commonState.appExceptionWrapper;
   const handleAsyncException = async () => {
-    if (currentAppExceptionWrapper !== null) {
-      await baseProvider.handleException(redux.exceptionHandler, currentAppExceptionWrapper);
+    // Do là Redux trong '[BaseRedux]' chia sẻ các Redux và setter với nhau
+    // => Nên chỉ cần đặt 1 cái là `[AppRedux]` để `[handleException]`.
+    // Nếu ko thì khi '[setState]' các components children đều sẽ '[handleException]'
+    // => Ở đây là dùng dialog để handle,nên nó sẽ bị lặp giao diện,
+    // Dialog dùng '[Alert.alert]' nên ko có method kiểm tra (isOpen) hay là method (close)
+    // => Tương lai chuyển sang dạng dialog của react-navigation theo kiểu push screen
+    if (appExceptionWrapper && redux.slice.name === appRedux.slice.name) {
+      await baseProvider.handleException(redux.commonRedux.exceptionHandler, appExceptionWrapper);
     }
   };
 
@@ -74,7 +76,7 @@ export const BaseProviderState = <B extends Redux<any, any>>({
     return () => {
       baseProvider.dispose(redux.disposeBag);
     };
-  }, [currentAppExceptionWrapper]);
+  }, [appExceptionWrapper]);
 
   return (
     <TouchableWithoutFeedback onPress={() => ViewUtils.hideKeyboard()}>

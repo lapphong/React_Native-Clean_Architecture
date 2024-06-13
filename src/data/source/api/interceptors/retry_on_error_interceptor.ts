@@ -29,25 +29,27 @@ export class RetryOnErrorInterceptor extends BaseInterceptor {
   }
 
   async onError(error: AxiosError): Promise<AxiosError | AxiosResponse<unknown, any>> {
-    if (error.config!.headers[this._retryCountKey] !== null) {
-      const retryCount: number = error.config!.headers[this._retryCountKey] as number;
-      if (retryCount > 0 && this._shouldRetry(error)) {
-        await new Promise<void>(resolve => setTimeout(resolve, Constants.retryInterval));
-        const response = await this.axiosInstance.request({
-          headers: {
-            ...error.config!.headers,
-            [this._retryHeaderKey]: true,
-            [this._retryCountKey]: retryCount - 1,
-          },
-          method: error.config?.method,
-          url: error.config?.url,
-          data: error.config?.data,
-          params: error.config?.params,
-        });
-        if (isAxiosError(response)) {
-          return Promise.reject(error);
+    if (isAxiosError(error)) {
+      if (error.config!.headers[this._retryCountKey] !== null) {
+        const retryCount: number = error.config!.headers[this._retryCountKey] as number;
+        if (retryCount > 0 && this._shouldRetry(error)) {
+          await new Promise<void>(resolve => setTimeout(resolve, Constants.retryInterval));
+          const response = await this.axiosInstance.request({
+            headers: {
+              ...error.config!.headers,
+              [this._retryHeaderKey]: true,
+              [this._retryCountKey]: retryCount - 1,
+            },
+            method: error.config?.method,
+            url: error.config?.url,
+            data: error.config?.data,
+            params: error.config?.params,
+          });
+          if (isAxiosError(response)) {
+            return Promise.reject(error);
+          }
+          return Promise.resolve(response);
         }
-        return Promise.resolve(response);
       }
     }
     return Promise.reject(error);

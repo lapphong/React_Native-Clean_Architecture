@@ -1,4 +1,4 @@
-import {AxiosError, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
+import {AxiosError, AxiosResponse, InternalAxiosRequestConfig, isAxiosError} from 'axios';
 import {BaseInterceptor} from 'data/data';
 import {Log, LogConfig} from 'shared/shared';
 
@@ -92,17 +92,20 @@ export class CustomLogInterceptor extends BaseInterceptor {
   }
 
   onError(error: AxiosError): AxiosError | Promise<AxiosError> {
-    if (!CustomLogInterceptor._enableLogInterceptor || !this.enableLogErrorResponse) {
-      return error;
-    }
-    const log: string[] = [];
-    log.push('\n************ Request Error ************');
-    log.push(`⛔️ Error: [${error.config!.method?.toUpperCase()}][${error.config!.url}]`);
-    log.push(`⛔️ Error Code: ${error.response?.status ?? 'unknown status code'}`);
-    log.push(`⛔️ Json: ${this._prettyResponse(error.response?.data ?? 'No response data')}`);
-    log.push('*****************************************');
+    if (isAxiosError(error)) {
+      if (!CustomLogInterceptor._enableLogInterceptor || !this.enableLogErrorResponse) {
+        return error;
+      }
+      const log: string[] = [];
+      log.push('\n************ Request Error ************');
+      log.push(`⛔️ Error: [${error.config!.method?.toUpperCase()}][${error.config!.url}]`);
+      log.push(`⛔️ Error Code: ${error.response?.status ?? 'unknown status code'}`);
+      log.push(`⛔️ Json: ${this._prettyResponse(error.response?.data ?? 'No response data')}`);
+      log.push('*****************************************');
 
-    Log.e(log.join('\n'), {name: 'Request Error'});
+      Log.e(log.join('\n'), {name: 'Request Error'});
+    }
+
     return Promise.reject(error);
   }
 

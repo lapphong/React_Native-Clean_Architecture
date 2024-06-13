@@ -13,7 +13,7 @@ export class AxiosBuilder {
     });
 
     const sortedInterceptors = (interceptors?.(axiosInstance) ?? []).sort(
-      (a, b) => (b.priority || -1) - (a.priority || -1),
+      (a, b) => (a.priority || -1) - (b.priority || -1),
     );
 
     sortedInterceptors.forEach(interceptor => {

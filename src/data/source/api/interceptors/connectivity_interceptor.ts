@@ -23,7 +23,7 @@ export class ConnectivityInterceptor extends BaseInterceptor {
         name: 'ConnectivityError',
         message: 'No Internet Connection',
         isAxiosError: true,
-        toJSON: () => ({name: 'ConnectivityError', message: 'No Internet Connection'}),
+        toJSON: () => ({code: AxiosError.ERR_NETWORK}),
       };
       throw container.resolve<AxiosErrorMapper>(DI_Type.AxiosErrorMapper).map(error);
     }

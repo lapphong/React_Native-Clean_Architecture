@@ -39,10 +39,6 @@ export class AxiosErrorMapper extends ExceptionMapper<NetworkException> {
 
         case AxiosError.ETIMEDOUT:
           return new NetworkException(NetworkExceptionsKind.requestTimeout);
-        default:
-          if (exception.response instanceof NetworkException) {
-            return exception.response as NetworkException;
-          }
       }
     } else {
       if (exception.toString().valueOf() === 'is not a subtype of') {
