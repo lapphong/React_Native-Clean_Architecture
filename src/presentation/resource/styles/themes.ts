@@ -41,6 +41,9 @@ export class ThemeData {
         surface: dataThemeColor.background,
         error: dataThemeColor.error,
       },
+      bottomBar: {
+        background: dataThemeColor.bottomBarBackground,
+      },
       textInput: {
         error: dataThemeColor.error,
         textInputBorderColor: dataThemeColor.textInputBorderColor,
@@ -98,6 +101,9 @@ export type ThemeObject = {
     surface: string;
     error: string;
   };
+  bottomBar: {
+    background: string;
+  };
   textInput: {
     error: string;
     textInputBorderColor: string;
@@ -121,7 +127,7 @@ export type ThemeObject = {
   elevatedButtonTheme: {
     backgroundColor: string;
     textButtonColor: string;
-    disableBackgroundColor:string,
+    disableBackgroundColor: string;
   };
   indicator: {
     backgroundIndicator: string;

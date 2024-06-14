@@ -7,6 +7,7 @@ export const ThemeColorLight: ThemeColor = {
   background: AppColors.grey12,
 
   // ---> Bottom Navigation Bar
+  bottomBarBackground: AppColors.grey12,
   bottomBarIconSelected: AppColors.purple,
   bottomBarIconUnSelected: '#9D9D9D',
   bottomBarSelectedItemColor: AppColors.purple,
@@ -27,7 +28,7 @@ export const ThemeColorLight: ThemeColor = {
   backgroundButtonColor: AppColors.purple,
 
   // ---> Switch
-  switchThumb: AppColors.grey2,
+  switchThumb: AppColors.purple,
 
   // ---> SnackBar
   snackBarBackground: AppColors.black,

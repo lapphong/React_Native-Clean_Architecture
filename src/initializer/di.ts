@@ -25,6 +25,8 @@ import {CommonRedux} from 'app/base_redux/common_redux';
 import {AppRedux} from 'app/redux/app_redux';
 import {LoginRedux} from 'app/redux/login_redux';
 import {MainRedux} from 'app/redux/main_redux';
+import {SettingRedux} from 'app/redux/setting_redux';
+import {HomeRedux} from 'app/redux/home_redux';
 
 export enum DI_Type {
   NetworkingFactory = 'NetworkingFactory',
@@ -32,6 +34,8 @@ export enum DI_Type {
   AppRedux = 'AppRedux',
   LoginRedux = 'LoginRedux',
   MainRedux = 'MainRedux',
+  HomeRedux = 'HomeRedux',
+  SettingRedux = 'SettingRedux',
   AppPopupInfoMapper = 'AppPopupInfoMapper',
   AxiosErrorMapper = 'AxiosErrorMapper',
   ConnectivityHelper = 'ConnectivityHelper',
@@ -52,6 +56,8 @@ export enum DI_Type {
 container.registerSingleton<NetworkingFactory>(DI_Type.NetworkingFactory, NetworkingFactory);
 container.register<CommonRedux>(DI_Type.CommonRedux, CommonRedux);
 container.register<MainRedux>(DI_Type.MainRedux, MainRedux);
+container.register<SettingRedux>(DI_Type.SettingRedux, SettingRedux);
+container.register<HomeRedux>(DI_Type.HomeRedux, HomeRedux);
 container.register<AppRedux>(DI_Type.AppRedux, {
   useFactory: c => new AppRedux(c.resolve<AppUsecase>(DI_Type.AppUsecase)),
 });

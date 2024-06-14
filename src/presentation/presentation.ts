@@ -26,6 +26,7 @@ import {MainScreen} from './ui/main/MainScreen';
 import {AppPopupInfoMapper} from './navigation/mapper/AppPopupInfoMapper';
 import {HomeScreen} from './ui/home/HomeScreen';
 import {SettingScreen} from './ui/setting/SettingScreen';
+import {NotiScreen} from './ui/noti/NotiScreen';
 
 export {
   // exceptionHandler
@@ -56,6 +57,7 @@ export {
   LoginScreen,
   MainScreen,
   HomeScreen,
+  NotiScreen,
   SettingScreen,
 };
 

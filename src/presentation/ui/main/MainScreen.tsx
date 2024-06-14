@@ -1,110 +1,49 @@
-import {AppNavigator, AppPopupInfo} from 'domain/domain';
-import {DI_Type, container} from 'initializer/initializer';
-import {AppNavigatorImpl} from 'presentation/presentation';
 import React from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {Log} from 'shared/shared';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {BaseProviderState, appRedux, mainRedux} from 'app/app';
+import {AppColors, AppNavigatorImpl, useTheme} from 'presentation/presentation';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {DI_Type, container} from 'initializer/initializer';
+import {AppNavigator, BottomTab} from 'domain/domain';
+import {Text} from 'react-native';
+import {useSelector} from 'react-redux';
+
+const Tab = createBottomTabNavigator();
 
 export const MainScreen = () => {
-  const appNavigator = container.resolve<AppNavigator>(DI_Type.AppNavigator);
-  (appNavigator as AppNavigatorImpl).initialize();
+  const theme = useTheme();
+  const isDarkTheme = useSelector(appRedux.getSelector).isDarkTheme;
+  const navigator = container.resolve<AppNavigator>(DI_Type.AppNavigator);
 
   return (
-    <SafeAreaView style={{backgroundColor: '#FFF', flex: 1}}>
-      <View style={styles.container}>
-        <Text style={styles.loginText}>Main</Text>
-        <Button
-          title="currentBottomTab"
-          onPress={() => {
-            Log.d(`currentBottomTab ${(appNavigator as AppNavigatorImpl).currentBottomTab}`, {
-              name: 'currentBottomTab',
-            });
-          }}
-        />
-        <Button
-          title="canPopSelfOrChildren"
-          onPress={() => {
-            Log.d(
-              `canPopSelfOrChildren: ${(appNavigator as AppNavigatorImpl).canPopSelfOrChildren}`,
-              {
-                name: 'canPopSelfOrChildren',
-              },
-            );
-          }}
-        />
-        <Button
-          title="getCurrentRouteName"
-          onPress={() => {
-            Log.d((appNavigator as AppNavigatorImpl).getCurrentRouteName, {
-              name: 'getCurrentRouteName',
-            });
-          }}
-        />
-        <Button
-          title="popUntilRootOfCurrentBottomTab"
-          onPress={() => {
-            (appNavigator as AppNavigatorImpl).popUntilRootOfCurrentBottomTab();
-          }}
-        />
-        <Button
-          title="Push"
-          onPress={() => {
-            (appNavigator as AppNavigatorImpl).push({name: 'auth'});
-          }}
-        />
-        <Button
-          title="replace"
-          onPress={() => {
-            (appNavigator as AppNavigatorImpl).replace({name: 'auth'});
-          }}
-        />
-        <Button
-          title="replaceAll"
-          onPress={() => {
-            (appNavigator as AppNavigatorImpl).replaceAll({name: 'auth'});
-          }}
-        />
-        <Button
-          title="pop"
-          onPress={() => {
-            (appNavigator as AppNavigatorImpl).pop({useRootNavigator: false});
-          }}
-        />
-        <Button
-          title="show dialog"
-          onPress={async () => {
-            await (appNavigator as AppNavigatorImpl).showDialog(
-              AppPopupInfo.confirmDialog({
-                message: 'Test Show dialog',
-                onPressed: () => {
-                  (appNavigator as AppNavigatorImpl).pop({useRootNavigator: false});
-                },
-              }),
-            );
-          }}
-        />
-        <Button
-          title="show SnackBar"
-          onPress={() => {
-            (appNavigator as AppNavigatorImpl).showSuccessSnackBar('Test show snack bar');
-          }}
-        />
-      </View>
-    </SafeAreaView>
+    <BaseProviderState redux={mainRedux}>
+      <Tab.Navigator
+        screenOptions={({route}) => ({
+          tabBarIcon: ({color, size}) => {
+            const iconName =
+              BottomTab.tabIcons[route.name as BottomTab]?.icon || 'default-icon-name';
+            return <Icon name={iconName} color={color} size={size} />;
+          },
+          headerShown: false,
+          tabBarStyle: {
+            backgroundColor: theme.getTheme.bottomBar.background,
+            height: (50).rps,
+            paddingTop: 5,
+            borderTopWidth: isDarkTheme ? 0 : 1,
+          },
+          tabBarActiveTintColor: AppColors.purple,
+          tabBarInactiveTintColor: 'gray',
+          tabBarLabel: ({color}) => (
+            <Text style={{color, paddingBottom: 5}}>
+              {BottomTab.getLabel(route.name as BottomTab)}
+            </Text>
+          ),
+          tabBarLabelStyle: theme.getTheme.textTheme.labelMedium,
+        })}>
+        {(navigator as AppNavigatorImpl).tabRoutes.map(route => (
+          <Tab.Screen key={route.name} name={route.name} component={route.component} />
+        ))}
+      </Tab.Navigator>
+    </BaseProviderState>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFF', // Màu nền trắng
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loginText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#000', // Màu chữ đen
-  },
-});

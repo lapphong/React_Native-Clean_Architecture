@@ -59,7 +59,7 @@ export const BaseProviderState = <B extends Redux<any, any>>({
   const appExceptionWrapper = commonState.appExceptionWrapper;
   const handleAsyncException = async () => {
     // Do là Redux trong '[BaseRedux]' chia sẻ các Redux và setter với nhau
-    // => Nên chỉ cần đặt 1 cái là `[AppRedux]` để `[handleException]`.
+    // => Nên chỉ cần đặt 1 cái cao nhất, trong file App.tsx là `[AppRedux]`.
     // Nếu ko thì khi '[setState]' các components children đều sẽ '[handleException]'
     // => Ở đây là dùng dialog để handle,nên nó sẽ bị lặp giao diện,
     // Dialog dùng '[Alert.alert]' nên ko có method kiểm tra (isOpen) hay là method (close)
@@ -85,7 +85,9 @@ export const BaseProviderState = <B extends Redux<any, any>>({
           barStyle={appState.isDarkTheme ? 'light-content' : 'dark-content'}
           backgroundColor={appState.isDarkTheme ? Colors.darker : Colors.light}
         />
-        {commonState.isLoading && <AppLoading theme={theme} />}
+        {commonState.isLoading && redux.slice.name === appRedux.slice.name && (
+          <AppLoading theme={theme} />
+        )}
         {children}
       </SafeAreaView>
     </TouchableWithoutFeedback>

@@ -1,28 +1,38 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {StyleSheet, View, ScrollView, Text, Image} from 'react-native';
+import {BaseProviderState, appRedux, homeRedux} from 'app/app';
+import {useTheme} from 'presentation/presentation';
+import {useSelector} from 'react-redux';
+import Assets from 'assets/assets';
 
 export const HomeScreen = () => {
+  const theme = useTheme();
+  const isDarkTheme = useSelector(appRedux.getSelector).isDarkTheme;
+
   return (
-    <SafeAreaView style={{backgroundColor: '#FFF', flex: 1}}>
-      <View style={styles.container}>
-        <Text style={styles.loginText}>Login</Text>
-        {/* Các dòng text khác */}
-      </View>
-    </SafeAreaView>
+    <BaseProviderState redux={homeRedux}>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        contentContainerStyle={styles.scrollView}>
+        <View style={styles.container}>
+          <Image
+            source={Assets.images.app_icon}
+            style={{marginBottom: 20, width: (200).rps, height: (200).rps, resizeMode: 'cover'}}
+          />
+          <Text style={theme.getTheme.textTheme.headlineLarge}>HomeScreen</Text>
+        </View>
+      </ScrollView>
+    </BaseProviderState>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  scrollView: {
     flex: 1,
-    backgroundColor: '#FFF', // Màu nền trắng
     justifyContent: 'center',
-    alignItems: 'center',
   },
-  loginText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#000', // Màu chữ đen
+  container: {
+    paddingHorizontal: 16,
+    alignItems: 'center',
   },
 });

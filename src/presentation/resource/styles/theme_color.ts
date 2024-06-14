@@ -5,6 +5,7 @@ export interface ThemeColor {
   background: string;
 
   // BottomNavigationBar
+  bottomBarBackground: string;
   bottomBarIconSelected: string;
   bottomBarIconUnSelected: string;
   bottomBarSelectedItemColor: string;
@@ -42,6 +43,7 @@ export interface ThemeColor {
 export class AppColors {
   // grey
   static readonly lightGrey: string = '#E9F0F6';
+  static readonly gray: string = 'gray';
   static readonly grey2: string = '#696969';
   static readonly grey3: string = '#EDEDED';
   static readonly grey4: string = '#B6B6B6';

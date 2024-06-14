@@ -1,10 +1,8 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import {navigator} from 'app/app';
 import {AppNavigatorImpl, LoginScreen, MainScreen} from 'presentation/presentation';
 
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
 
 export const AppRoute = ({isLogged = false}: {isLogged: boolean}) => {
   return (

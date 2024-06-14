@@ -5,6 +5,8 @@ import {CommonRedux, CommonEvents, CommonState} from './base_redux/common_redux'
 import {AppState, AppEvents, AppRedux} from './redux/app_redux';
 import {LoginState, LoginEvents, LoginRedux} from './redux/login_redux';
 import {MainState, MainEvents, MainRedux} from './redux/main_redux';
+import {HomeState, HomeEvents, HomeRedux} from './redux/home_redux';
+import {SettingState, SettingEvents, SettingRedux} from './redux/setting_redux';
 import store, {
   AppDispatch,
   RootState,
@@ -13,6 +15,8 @@ import store, {
   loginRedux,
   mainRedux,
   navigator,
+  homeRedux,
+  settingRedux,
 } from './store/store';
 import {MyApp} from './MyApp';
 
@@ -24,6 +28,8 @@ export {
   commonRedux,
   loginRedux,
   mainRedux,
+  homeRedux,
+  settingRedux,
   store,
   MyApp,
   BaseReduxState,
@@ -41,5 +47,11 @@ export {
   MainState,
   MainEvents,
   MainRedux,
+  SettingState,
+  SettingEvents,
+  SettingRedux,
+  HomeState,
+  HomeEvents,
+  HomeRedux,
 };
 export type {RootState, AppDispatch};

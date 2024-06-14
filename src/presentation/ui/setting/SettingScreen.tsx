@@ -1,28 +1,52 @@
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, {useState} from 'react';
+import {StyleSheet, View, ScrollView, Switch} from 'react-native';
+import {BaseProviderState, appRedux, settingRedux} from 'app/app';
+import {AppButton, AppColors, AppDimen, useTheme} from 'presentation/presentation';
+import {useSelector} from 'react-redux';
 
 export const SettingScreen = () => {
+  const theme = useTheme();
+  const isDarkTheme = useSelector(appRedux.getSelector).isDarkTheme;
+  const [state, setState] = useState(isDarkTheme);
+
+  const handleThemeChange = async (value: boolean) => {
+    setState(value);
+    await appRedux.onAppThemeChanged(value);
+  };
+
   return (
-    <SafeAreaView style={{backgroundColor: '#FFF', flex: 1}}>
-      <View style={styles.container}>
-        <Text style={styles.loginText}>Login</Text>
-        {/* Các dòng text khác */}
-      </View>
-    </SafeAreaView>
+    <BaseProviderState redux={settingRedux}>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        contentContainerStyle={styles.scrollView}>
+        <View style={styles.container}>
+          <Switch
+            trackColor={{false: AppColors.gray, true: AppColors.purple}}
+            thumbColor={theme.getTheme.switchTheme.thumbColor}
+            style={{transform: [{scaleX: 1.2}, {scaleY: 1.2}], height: (30).rps}}
+            value={state}
+            onValueChange={handleThemeChange}
+          />
+          <AppButton
+            theme={theme}
+            text="Đăng xuất"
+            width={(AppDimen.current.screenWidth / 2).rps}
+            background={theme.getTheme.elevatedButtonTheme.backgroundColor}
+            onPressed={async () => await appRedux.onAppLogoutPressed()}
+          />
+        </View>
+      </ScrollView>
+    </BaseProviderState>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  scrollView: {
     flex: 1,
-    backgroundColor: '#FFF', // Màu nền trắng
     justifyContent: 'center',
-    alignItems: 'center',
   },
-  loginText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#000', // Màu chữ đen
+  container: {
+    paddingHorizontal: 16,
+    alignItems: 'center',
   },
 });

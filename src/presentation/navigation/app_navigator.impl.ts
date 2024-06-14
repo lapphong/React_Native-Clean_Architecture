@@ -9,7 +9,7 @@ import {
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AppPopupInfoMapper} from './mapper/AppPopupInfoMapper';
 import {AppNavigator, AppPopupInfo, BottomTab, PageRouteInfo} from 'domain/domain';
-import {HomeScreen, SettingScreen} from 'presentation/presentation';
+import {HomeScreen, NotiScreen, SettingScreen} from 'presentation/presentation';
 import {Log, LogConfig, ViewUtils} from 'shared/shared';
 
 @singleton()
@@ -30,6 +30,7 @@ export class AppNavigatorImpl extends AppNavigator {
 
   tabRoutes = [
     {name: BottomTab.home, component: HomeScreen},
+    {name: BottomTab.notifications, component: NotiScreen},
     {name: BottomTab.setting, component: SettingScreen},
   ];
 

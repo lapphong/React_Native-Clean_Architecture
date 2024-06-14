@@ -7,6 +7,7 @@ export const ThemeColorDark: ThemeColor = {
   background: AppColors.black10,
 
   // ---> Bottom Navigation Bar
+  bottomBarBackground: AppColors.black,
   bottomBarIconSelected: AppColors.black,
   bottomBarIconUnSelected: '#9D9D9D',
   bottomBarSelectedItemColor: AppColors.black,
