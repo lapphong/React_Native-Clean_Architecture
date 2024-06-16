@@ -1,12 +1,12 @@
-export type Callback = (() => void) | (() => Promise<void>);
+import {VoidCallback} from 'shared/shared';
 
 export class AppPopupInfo {
   private constructor(
     public type: 'confirmDialog' | 'errorWithRetryDialog',
     public message: string = '',
-    public onPressed?: Callback,
-    public onCancel?: Callback,
-    public onRetryPressed?: Callback,
+    public onPressed?: VoidCallback,
+    public onCancel?: VoidCallback,
+    public onRetryPressed?: VoidCallback,
   ) {}
 
   static confirmDialog({
@@ -15,8 +15,8 @@ export class AppPopupInfo {
     onCancel,
   }: {
     message: string;
-    onPressed?: Callback;
-    onCancel?: Callback;
+    onPressed?: VoidCallback;
+    onCancel?: VoidCallback;
   }): AppPopupInfo {
     return new AppPopupInfo('confirmDialog', message, onPressed, onCancel);
   }
@@ -27,8 +27,8 @@ export class AppPopupInfo {
     onCancel,
   }: {
     message: string;
-    onRetryPressed?: Callback;
-    onCancel?: Callback;
+    onRetryPressed?: VoidCallback;
+    onCancel?: VoidCallback;
   }): AppPopupInfo {
     return new AppPopupInfo('errorWithRetryDialog', message, undefined, onCancel, onRetryPressed);
   }

@@ -1,7 +1,6 @@
 import React from 'react';
-import {useWindowDimensions} from 'react-native';
 import ContentLoader, {Rect} from 'react-content-loader/native';
-import {AppColors} from 'presentation/presentation';
+import {AppColors, AppDimen} from 'presentation/presentation';
 
 interface ShimmerContainerEffectProps {
   height?: number;
@@ -16,7 +15,7 @@ export const ShimmerContainerEffect: React.FC<ShimmerContainerEffectProps> = ({
   backgroundColor = AppColors.black,
   highlightColor = AppColors.purple,
 }) => {
-  const {width} = useWindowDimensions();
+  const width = (AppDimen.current.screenWidth - (16).rps).rps;
 
   return (
     <ContentLoader

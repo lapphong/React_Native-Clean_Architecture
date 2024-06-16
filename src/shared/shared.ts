@@ -33,13 +33,14 @@ import {DeviceHelper, DeviceType} from './helper/device_helper.ts';
 // Utils
 import {CompleterUtils} from './utils/completer_utils.ts';
 import {DateTimeUtils} from './utils/date_time_utils.ts';
-import { DebounceUtils } from './utils/debounce_utils.ts';
+import {DebounceUtils} from './utils/debounce_utils.ts';
 import './utils/extension.ts';
 import {FileUtils} from './utils/file_utils.ts';
 import {Log, LogColor} from './utils/log_utils.ts';
 import {ParseUtils} from './utils/parse_utils.ts';
 import {ValidationUtils} from './utils/validation_utils.ts';
 import {ViewUtils} from './utils/view_utils.ts';
+import {VoidCallback} from './helper/type/type.ts';
 
 export {
   // Config
@@ -70,7 +71,6 @@ export {
   DeviceType,
   DeviceHelper,
   // Resource
-
   // Utils
   CompleterUtils,
   DateTimeUtils,
@@ -82,3 +82,4 @@ export {
   ValidationUtils,
   ViewUtils,
 };
+export type {VoidCallback};

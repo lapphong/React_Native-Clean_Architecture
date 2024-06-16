@@ -8,7 +8,7 @@ import {User} from './entity/user';
 
 // Navigation
 import {AppNavigator, PageRouteInfo} from './navigation/app_navigator';
-import {AppPopupInfo, Callback} from './navigation/app_popup_info';
+import {AppPopupInfo} from './navigation/app_popup_info';
 
 // Repository
 import {AppRepository} from './repository/app_repository';
@@ -44,4 +44,4 @@ export {
   AuthUsecase,
   NotiUsecase,
 };
-export type {Callback, PageRouteInfo};
+export type {PageRouteInfo};

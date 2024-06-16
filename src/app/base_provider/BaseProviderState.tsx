@@ -61,9 +61,10 @@ export const BaseProviderState = <B extends Redux<any, any>>({
     // Do là Redux trong '[BaseRedux]' chia sẻ các Redux và setter với nhau
     // => Nên chỉ cần đặt 1 cái cao nhất, trong file App.tsx là `[AppRedux]`.
     // Nếu ko thì khi '[setState]' các components children đều sẽ '[handleException]'
-    // => Ở đây là dùng dialog để handle,nên nó sẽ bị lặp giao diện,
-    // Dialog dùng '[Alert.alert]' nên ko có method kiểm tra (isOpen) hay là method (close)
+    // => Ở đây dùng dialog để handle, nên nó sẽ bị lặp giao diện.
+    // Dialog dùng '[Alert.alert]' ko có method kiểm tra (isOpen) hay là method (close)
     // => Tương lai chuyển sang dạng dialog của react-navigation theo kiểu push screen
+    // lúc đó có thể kiểm tra pop trước khi bật.
     if (appExceptionWrapper && redux.slice.name === appRedux.slice.name) {
       await baseProvider.handleException(redux.commonRedux.exceptionHandler, appExceptionWrapper);
     }
@@ -71,6 +72,9 @@ export const BaseProviderState = <B extends Redux<any, any>>({
 
   useEffect(() => {
     initState();
+  }, []);
+
+  useEffect(() => {
     handleAsyncException();
 
     return () => {

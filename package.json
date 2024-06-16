@@ -16,6 +16,7 @@
     "@react-navigation/native-stack": "^6.9.26",
     "@react-navigation/stack": "^6.3.29",
     "@reduxjs/toolkit": "^2.2.5",
+    "@shopify/flash-list": "^1.6.4",
     "axios": "^1.7.2",
     "clock": "^1.0.2",
     "moment": "^2.30.1",
