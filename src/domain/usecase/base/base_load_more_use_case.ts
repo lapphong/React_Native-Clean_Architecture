@@ -1,3 +1,5 @@
+import {DI_Type, container} from 'initializer/initializer';
+import {AxiosErrorMapper} from 'data/data';
 import {LoadMoreOutput, PagedList} from 'domain/domain';
 import {Constants, Log, LogConfig} from 'shared/shared';
 
@@ -62,7 +64,9 @@ export abstract class BaseLoadMoreUseCase<T> {
       this._oldOutput = newOutput;
       if (LogConfig.enableLogUseCaseOutput) {
         Log.d(
-          `LoadMoreUseCase Output: pagedList: ${pagedList}, inputPage: ${this.page}, inputOffset: ${this.offset}, newOutput: ${newOutput}`,
+          `LoadMoreUseCase Output: pagedList: ${JSON.stringify(pagedList)}, inputPage: ${
+            this.page
+          }, inputOffset: ${this.offset}, newOutput: ${JSON.stringify(newOutput)}`,
           {name: (this.constructor as any).name},
         );
       }
@@ -75,8 +79,7 @@ export abstract class BaseLoadMoreUseCase<T> {
 
       this._output = this._oldOutput;
 
-      throw DioExceptionMapper().map(e);
-      // throw e;
+      throw container.resolve<AxiosErrorMapper>(DI_Type.AxiosErrorMapper).map(e);
     }
   }
 }

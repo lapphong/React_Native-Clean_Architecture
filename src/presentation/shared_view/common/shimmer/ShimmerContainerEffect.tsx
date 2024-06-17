@@ -19,7 +19,7 @@ export const ShimmerContainerEffect: React.FC<ShimmerContainerEffectProps> = ({
 
   return (
     <ContentLoader
-      speed={2}
+      speed={0.75}
       width={width}
       height={height}
       viewBox={`0 0 ${width} ${height}`}

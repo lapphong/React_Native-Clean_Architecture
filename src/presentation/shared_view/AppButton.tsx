@@ -1,12 +1,13 @@
 import React from 'react';
 import {AppColors, ThemeData} from 'presentation/presentation';
-import {TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {TouchableOpacity, Text, StyleSheet, DimensionValue} from 'react-native';
 
 interface AppButtonProps {
   theme: ThemeData;
   text: string;
   background?: string;
-  width?: number;
+  width?: DimensionValue | undefined;
+  borderRadius?: number;
   onPressed?: () => void;
 }
 
@@ -14,14 +15,18 @@ export const AppButton: React.FC<AppButtonProps> = ({
   theme,
   text,
   background = AppColors.blue,
-  width,
+  width = '100%',
+  borderRadius = 10,
   onPressed,
 }) => {
   return (
     <TouchableOpacity
       onPress={onPressed}
       activeOpacity={0.7}
-      style={[styles.button, {backgroundColor: background, width: width ?? '100%'}]}>
+      style={[
+        styles.button,
+        {backgroundColor: background, width: width, borderRadius: borderRadius},
+      ]}>
       <Text
         style={[
           theme.getTheme.textTheme.titleLarge,
@@ -36,7 +41,6 @@ export const AppButton: React.FC<AppButtonProps> = ({
 const styles = StyleSheet.create({
   button: {
     height: (55).rps,
-    borderRadius: 10,
     marginVertical: 20,
     justifyContent: 'center',
     alignItems: 'center',

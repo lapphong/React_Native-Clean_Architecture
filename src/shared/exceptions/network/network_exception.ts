@@ -41,7 +41,7 @@ export class NetworkException extends AppException {
   }
 
   toString(): string {
-    return `NetworkingException: {kind: ${this.kind}, reason: ${this.reason ?? 'Null'}}`;
+    return `NetworkingException: {kind: ${this.kind}, reason: ${this.reason ?? ''}}`;
   }
 }
 

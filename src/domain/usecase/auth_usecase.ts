@@ -1,5 +1,4 @@
 import {injectable, inject} from 'tsyringe';
-
 import {AuthRepository, Gender} from 'domain/domain';
 import {ValidationException, ValidationExceptionKind, ValidationUtils} from 'shared/shared';
 

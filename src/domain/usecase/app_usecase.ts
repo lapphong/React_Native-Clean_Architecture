@@ -1,5 +1,5 @@
-import {AppNavigator, AppPopupInfo, AppRepository} from 'domain/domain';
 import {injectable, inject} from 'tsyringe';
+import {AppNavigator, AppPopupInfo, AppRepository} from 'domain/domain';
 
 @injectable()
 export class AppUsecase {

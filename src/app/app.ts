@@ -6,6 +6,7 @@ import {AppState, AppEvents, AppRedux} from './redux/app_redux';
 import {LoginState, LoginEvents, LoginRedux} from './redux/login_redux';
 import {MainState, MainEvents, MainRedux} from './redux/main_redux';
 import {HomeState, HomeEvents, HomeRedux} from './redux/home_redux';
+import {NotiState, NotiEvents, NotiRedux} from './redux/noti_redux';
 import {SettingState, SettingEvents, SettingRedux} from './redux/setting_redux';
 import store, {
   AppDispatch,
@@ -16,6 +17,7 @@ import store, {
   mainRedux,
   navigator,
   homeRedux,
+  notiRedux,
   settingRedux,
 } from './store/store';
 import {MyApp} from './MyApp';
@@ -29,6 +31,7 @@ export {
   loginRedux,
   mainRedux,
   homeRedux,
+  notiRedux,
   settingRedux,
   store,
   MyApp,
@@ -47,11 +50,14 @@ export {
   MainState,
   MainEvents,
   MainRedux,
-  SettingState,
-  SettingEvents,
-  SettingRedux,
   HomeState,
   HomeEvents,
   HomeRedux,
+  NotiState,
+  NotiEvents,
+  NotiRedux,
+  SettingState,
+  SettingEvents,
+  SettingRedux,
 };
 export type {RootState, AppDispatch};

@@ -3,14 +3,6 @@ export class LogConfig {
   static readonly enableGeneralLog: boolean = __DEV__;
   static readonly isPrettyJson: boolean = __DEV__;
 
-  // bloc observer
-  static readonly logOnBlocChange: boolean = false;
-  static readonly logOnBlocCreate: boolean = false;
-  static readonly logOnBlocClose: boolean = false;
-  static readonly logOnBlocError: boolean = false;
-  static readonly logOnBlocEvent: boolean = __DEV__;
-  static readonly logOnBlocTransition: boolean = false;
-
   // navigator observer
   static readonly enableNavigatorObserverLog: boolean = __DEV__;
 

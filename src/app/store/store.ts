@@ -1,7 +1,15 @@
 import {configureStore, combineReducers} from '@reduxjs/toolkit';
 import observerMiddleware from 'app/base_redux/redux_observer';
 import {DI_Type, container} from 'initializer/initializer';
-import {AppRedux, CommonRedux, HomeRedux, LoginRedux, MainRedux, SettingRedux} from 'app/app';
+import {
+  AppRedux,
+  CommonRedux,
+  HomeRedux,
+  LoginRedux,
+  MainRedux,
+  NotiRedux,
+  SettingRedux,
+} from 'app/app';
 import {AppNavigator} from 'domain/domain';
 
 export const navigator = container.resolve<AppNavigator>(DI_Type.AppNavigator);
@@ -10,6 +18,7 @@ export const appRedux = container.resolve<AppRedux>(DI_Type.AppRedux);
 export const loginRedux = container.resolve<LoginRedux>(DI_Type.LoginRedux);
 export const mainRedux = container.resolve<MainRedux>(DI_Type.MainRedux);
 export const homeRedux = container.resolve<HomeRedux>(DI_Type.HomeRedux);
+export const notiRedux = container.resolve<NotiRedux>(DI_Type.NotiRedux);
 export const settingRedux = container.resolve<SettingRedux>(DI_Type.SettingRedux);
 
 const storeReducers = combineReducers({
@@ -18,6 +27,7 @@ const storeReducers = combineReducers({
   [loginRedux.slice.name]: loginRedux.slice.reducer,
   [mainRedux.slice.name]: mainRedux.slice.reducer,
   [homeRedux.slice.name]: homeRedux.slice.reducer,
+  [notiRedux.slice.name]: notiRedux.slice.reducer,
   [settingRedux.slice.name]: settingRedux.slice.reducer,
 });
 
